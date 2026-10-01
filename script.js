@@ -463,7 +463,10 @@ if (themeToggle) {
             lines.push('');
             lines.push('ФИО:');
             lines.push('Телефон:');
-            lines.push('Город / ПВЗ или адрес:');
+            lines.push('Город:');
+            lines.push('Адрес:');
+            lines.push('Почтовый индекс:');
+            lines.push('ПВЗ (если нужен):');
             lines.push('');
             lines.push('Готов подтвердить заказ.');
             const message = lines.join('%0A');
