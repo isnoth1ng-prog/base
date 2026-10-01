@@ -1,1 +1,26 @@
-PLACEHOLDER
+:root {
+    --bg-main: #f6f6f4;
+    --bg-sheet: rgba(255, 255, 255, 0.96);
+    --text-primary: #111111;
+    --text-secondary: #8e8e93;
+    --border-light: rgba(0, 0, 0, 0.07);
+    --glass-bg: rgba(255, 255, 255, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.82);
+    --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.16);
+    --shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.08);
+    --btn-primary: #111111;
+    --btn-primary-hover: #000000;
+    --btn-disabled: rgba(17, 17, 17, 0.2);
+    --btn-text: #ffffff;
+    --chip-bg: rgba(0, 0, 0, 0.045);
+    --chip-active: #111111;
+    --chip-text-active: #ffffff;
+    --radius-sheet: 22px;
+    --radius-btn: 14px;
+    --radius-card: 18px;
+    --spring: cubic-bezier(0.175, 0.885, 0.32, 1.08);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* truncated for safety - will use full in next */
