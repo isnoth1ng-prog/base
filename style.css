@@ -1048,3 +1048,16 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .product-detail-title { font-size: 32px; letter-spacing: -1.4px; }
   .product-actions { position: sticky; bottom: 10px; z-index: 20; padding: 8px; margin: 22px -8px 24px; border: 1px solid var(--border-light); border-radius: 18px; background: color-mix(in srgb, var(--bg-sheet) 88%, transparent); backdrop-filter: blur(16px); }
 }
+
+.product-actions a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+.cart-sheet .btn-order {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
