@@ -86,6 +86,17 @@ const products = [
         fit: 'Oversize',
         colors: ['Black'],
         sizes: ['M', 'L', 'XL']
+    },
+    {
+        id: '9',
+        title: 'WIDE SWEATPANTS',
+        subtitle: 'Черный · Wide fit',
+        price: 2490,
+        image: 'images_cards/card_sweatpants-black.jpg',
+        material: 'Хлопок (Футер 3-х нитка)',
+        fit: 'Wide / Oversize',
+        colors: ['Black'],
+        sizes: ['S', 'M', 'L', 'XL']
     }
 ];
 
@@ -98,7 +109,6 @@ let currentProduct = null;
 let selectedColor = null;
 let selectedSize = null;
 
-// Render Catalog
 function renderCatalog() {
     products.forEach(p => {
         const card = document.createElement('div');
@@ -117,7 +127,6 @@ function renderCatalog() {
     });
 }
 
-// Open Sheet
 function openSheet(product) {
     currentProduct = product;
     selectedColor = null;
@@ -128,7 +137,6 @@ function openSheet(product) {
     document.getElementById('sheet-subtitle').textContent = product.subtitle;
     document.getElementById('sheet-price').textContent = `${product.price.toLocaleString('ru-RU')} ₽`;
     
-    // Details
     const matRow = document.getElementById('detail-material');
     if (product.material) {
         matRow.style.display = 'flex';
@@ -145,7 +153,6 @@ function openSheet(product) {
         fitRow.style.display = 'none';
     }
 
-    // Colors
     const colorsBox = document.getElementById('sheet-colors');
     colorsBox.innerHTML = '';
     if (product.colors && product.colors.length > 0) {
@@ -154,7 +161,6 @@ function openSheet(product) {
             const btn = document.createElement('button');
             btn.className = 'chip';
             btn.textContent = color;
-            // Auto-select if only 1 color
             if (product.colors.length === 1) {
                 btn.classList.add('active');
                 selectedColor = color;
@@ -172,7 +178,6 @@ function openSheet(product) {
         selectedColor = "Standard";
     }
 
-    // Sizes
     const sizesBox = document.getElementById('sheet-sizes');
     sizesBox.innerHTML = '';
     if (product.sizes && product.sizes.length > 0) {
@@ -195,8 +200,6 @@ function openSheet(product) {
     }
 
     updateCtaState();
-
-    // Show
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
 }
@@ -208,24 +211,20 @@ function closeSheet() {
 
 function updateCtaState() {
     const btnText = btnOrder.querySelector('.btn-text');
-    
     if (currentProduct.sizes && currentProduct.sizes.length > 0 && !selectedSize) {
         btnOrder.classList.add('disabled');
         btnText.textContent = 'Выберите размер';
         return;
     }
-    
     if (currentProduct.colors && currentProduct.colors.length > 0 && !selectedColor) {
         btnOrder.classList.add('disabled');
         btnText.textContent = 'Выберите цвет';
         return;
     }
-
     btnOrder.classList.remove('disabled');
     btnText.textContent = 'Заказать в Telegram';
 }
 
-// Event Listeners
 closeBtn.addEventListener('click', closeSheet);
 overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeSheet();
@@ -233,19 +232,14 @@ overlay.addEventListener('click', (e) => {
 
 btnOrder.addEventListener('click', () => {
     if (btnOrder.classList.contains('disabled')) return;
-
     const tgUsername = "nthngv";
     const message = `Здравствуйте! Хочу заказать:%0A%0AТовар: ${currentProduct.title}%0AЦвет: ${selectedColor}%0AРазмер: ${selectedSize}%0AЦена: ${currentProduct.price.toLocaleString('ru-RU')} ₽`;
-    
     const tgLink = `https://t.me/${tgUsername}?text=${message}`;
     window.open(tgLink, '_blank');
 });
 
-// Init
 document.addEventListener('DOMContentLoaded', renderCatalog);
 
-
-/* Theme */
 const themeToggle = document.getElementById('theme-toggle');
 
 function setTheme(theme) {
