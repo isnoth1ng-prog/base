@@ -316,3 +316,19 @@ if (themeToggle) {
         setTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
     });
 }
+
+/* Dynamic Island compact on scroll */
+(function () {
+    const header = document.querySelector('.glass-header');
+    if (!header) return;
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+            header.classList.toggle('island-compact', window.scrollY > 40);
+            ticking = false;
+        });
+    }, { passive: true });
+})();
+
