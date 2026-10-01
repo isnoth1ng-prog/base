@@ -348,11 +348,13 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 }
 .sheet-image-container { padding: 16px; }
 .sheet-image-container img {
-  width: 100%; max-height: 58vh;
-  display: block; border-radius: 16px;
+  width: 100%;
+  max-height: min(58vh, 520px);
+  display: block;
+  border-radius: 16px;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  object-position: center top;
+  object-position: center center;
   background: var(--card-bg);
 }
 .sheet-info-container {
@@ -431,7 +433,12 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
   .product-img-box { border-radius: 12px; }
   .sheet-content { display: block; padding-bottom: 84px; }
-  .sheet-image-container img { max-height: 40vh; aspect-ratio: 1 / 1; object-fit: cover; }
+  .sheet-image-container img {
+    max-height: 42vh;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center center;
+  }
   .sheet-info-container { padding: 18px 16px; }
   .bottom-sheet { max-height: 86vh; }
 }
