@@ -20,17 +20,17 @@
     <script>try{if(localStorage.getItem("base-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}</script>
 </head>
 <body>
-    <header class="glass-header">
+    <header class="glass-header" id="island">
         <div class="header-inner">
-            <a href="#" class="brand-logo">BASE.</a>
-            <nav class="nav-links">
-                <a href="#catalog">Каталог</a>
-                <a href="#how">Заказ</a>
-                <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
-                    <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
-                    <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.7 8.7 0 1 0 12 12Z"></path></svg>
-                </button>
+            <a href="#" class="brand-logo" id="island-logo">BASE.</a>
+            <nav class="nav-links" id="island-nav">
+                <a href="#catalog" data-section="catalog">Каталог</a>
+                <a href="#how" data-section="how">Заказ</a>
             </nav>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
+                <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+                <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.7 8.7 0 1 0 12 12Z"></path></svg>
+            </button>
         </div>
     </header>
 
