@@ -1,13 +1,13 @@
 :root {
-    --bg-main: #fafafa;
+    --bg-main: #f6f6f4;
     --bg-sheet: rgba(255, 255, 255, 0.96);
     --text-primary: #111111;
     --text-secondary: #8e8e93;
     --border-light: rgba(0, 0, 0, 0.07);
-    --glass-bg: rgba(255, 255, 255, 0.78);
-    --glass-border: rgba(255, 255, 255, 0.72);
-    --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.14);
-    --shadow-sm: 0 3px 18px rgba(0, 0, 0, 0.06);
+    --glass-bg: rgba(255, 255, 255, 0.62);
+    --glass-border: rgba(255, 255, 255, 0.82);
+    --shadow-soft: 0 24px 80px rgba(0, 0, 0, 0.16);
+    --shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.08);
     --btn-primary: #111111;
     --btn-primary-hover: #000000;
     --btn-disabled: rgba(17, 17, 17, 0.2);
@@ -17,7 +17,7 @@
     --chip-text-active: #ffffff;
     --radius-sheet: 22px;
     --radius-btn: 14px;
-    --radius-card: 12px;
+    --radius-card: 18px;
     --spring: cubic-bezier(0.175, 0.885, 0.32, 1.08);
     --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -43,12 +43,24 @@ html {
 }
 
 body {
+    position: relative;
     font-family: -apple-system, BlinkMacSystemFont, "Inter", sans-serif;
     background-color: var(--bg-main);
     color: var(--text-primary);
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
     overflow-x: hidden;
+    background-image: radial-gradient(circle at 18% 12%, rgba(255,255,255,0.95), transparent 32%), radial-gradient(circle at 82% 42%, rgba(255,255,255,0.72), transparent 28%);
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(115deg, rgba(255,255,255,0.20), transparent 38%, rgba(255,255,255,0.16));
+    mix-blend-mode: screen;
+    z-index: -1;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -75,7 +87,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     border: 1px solid var(--glass-border);
     border-radius: 100px;
     z-index: 100;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.9);
 }
 
 .header-inner {
@@ -142,7 +154,13 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     z-index: 2;
     text-align: center;
     color: #111;
-    padding: 28px;
+    padding: 30px 36px;
+    border: 1px solid rgba(255,255,255,0.74);
+    border-radius: 30px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.42), rgba(255,255,255,0.16));
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    box-shadow: 0 20px 70px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
 .hero-title {
@@ -183,12 +201,32 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 
 /* CATALOG */
 .catalog-section {
-    padding: 72px 0 96px;
+    padding: 76px 0 112px;
     scroll-margin-top: 20px;
 }
 
 .catalog-heading {
-    margin-bottom: 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+.catalog-heading > div { min-width: 0; }
+.catalog-eyebrow {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.4px;
+    color: var(--text-secondary);
+}
+.catalog-heading p {
+    max-width: 310px;
+    margin-bottom: 3px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.45;
 }
 
 .catalog-heading h2 {
@@ -200,29 +238,40 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 40px 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 34px 18px;
 }
 
 .product-card {
     cursor: pointer;
     min-width: 0;
+    transition: transform 0.45s var(--ease-out);
 }
+.product-card:hover { transform: translateY(-4px); }
 
 .product-img-box {
     aspect-ratio: 3 / 4;
     border-radius: var(--radius-card);
     overflow: hidden;
     background: #f1f1f1;
-    margin-bottom: 14px;
+    margin-bottom: 13px;
     position: relative;
+    border: 1px solid rgba(255,255,255,0.72);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.045), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
+.product-img-box::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent 34%, rgba(0,0,0,0.035));
+}
 .product-img-box img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s var(--ease-out);
+    transition: transform 0.65s var(--ease-out);
 }
 
 .product-card:hover .product-img-box img { transform: scale(1.025); }
@@ -230,15 +279,23 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .product-meta { padding: 0 2px; }
 
 .product-name {
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 500;
     margin-bottom: 4px;
     letter-spacing: -0.2px;
 }
 
 .product-price {
-    font-size: 14px;
-    color: var(--text-secondary);
+    display: inline-flex;
+    width: fit-content;
+    margin-top: 6px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.64);
+    border: 1px solid rgba(255,255,255,0.78);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+    font-size: 12px;
+    color: #4f4f52;
 }
 
 /* PRODUCT SHEET */
@@ -263,19 +320,19 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 }
 
 .bottom-sheet {
-    width: min(920px, 100%);
+    width: min(860px, 100%);
     background: var(--bg-sheet);
     backdrop-filter: blur(18px) saturate(115%);
     -webkit-backdrop-filter: blur(18px) saturate(115%);
-    border-top-left-radius: var(--radius-sheet);
-    border-top-right-radius: var(--radius-sheet);
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
     border: 1px solid rgba(255,255,255,0.72);
     border-bottom: none;
     box-shadow: var(--shadow-soft);
     transform: translateY(100%);
     transition: transform 0.42s var(--spring);
     position: relative;
-    max-height: 84vh;
+    max-height: 78vh;
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -312,20 +369,20 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 }
 
 .sheet-image-container {
-    padding: 20px;
+    padding: 18px;
 }
 
 .sheet-image-container img {
     width: 100%;
     max-height: 62vh;
     display: block;
-    border-radius: 14px;
+    border-radius: 18px;
     aspect-ratio: 3 / 4;
     object-fit: cover;
 }
 
 .sheet-info-container {
-    padding: 34px 34px 24px 10px;
+    padding: 30px 30px 22px 8px;
     display: flex;
     flex-direction: column;
 }
@@ -439,7 +496,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 
 /* FOOTER */
 .minimal-footer {
-    padding: 60px 0;
+    padding: 54px 0 64px;
     border-top: 1px solid var(--border-light);
 }
 
@@ -454,6 +511,14 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     font-size: 18px;
     font-weight: 600;
     letter-spacing: -0.5px;
+}
+
+.footer-note {
+    max-width: 360px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .footer-links {
@@ -481,32 +546,39 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
         min-height: 540px;
     }
 
-    .hero-content { padding: 20px; }
+    .hero-content { padding: 26px 22px; margin: 0 16px; border-radius: 24px; }
 
     .hero-title { font-size: 40px; }
     .hero-subtitle { font-size: 15px; margin-bottom: 24px; }
 
-    .catalog-section { padding: 56px 0 76px; }
+    .catalog-section { padding: 56px 0 82px; }
 
-    .catalog-heading { margin-bottom: 22px; }
+    .catalog-heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 22px;
+    }
+    .catalog-heading p { max-width: 280px; }
+    .catalog-eyebrow { margin-bottom: 7px; }
     .catalog-heading h2 { font-size: 32px; }
 
     .product-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 28px 12px;
+        gap: 30px 12px;
     }
 
     .product-img-box {
-        border-radius: 10px;
+        border-radius: 13px;
         margin-bottom: 11px;
     }
 
-    .product-name,
-    .product-price { font-size: 13px; }
+    .product-name { font-size: 12px; }
+    .product-price { font-size: 11px; }
 
     .bottom-sheet {
-        max-height: 82vh;
-        border-top-left-radius: 20px;
+        max-height: 84vh;
+        border-top-left-radius: 22px;
         border-top-right-radius: 20px;
     }
 
