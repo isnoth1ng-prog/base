@@ -54,7 +54,7 @@
                         <span class="catalog-eyebrow">BASE / COLLECTION</span>
                         <h2>Каталог</h2>
                     </div>
-                    <p>Вещи, которые легко собрать в свой гардероб.</p>
+                    <p>База на каждый день — выбери вещь и открой её подробности.</p>
                 </div>
 
                 <div class="catalog-tabs" id="catalog-tabs" role="tablist">
@@ -65,6 +65,38 @@
                 </div>
 
                 <div class="product-grid" id="products-grid"></div>
+            </div>
+        </section>
+
+        <section class="strengths-section" aria-labelledby="strengths-title">
+            <div class="container">
+                <div class="strengths-heading">
+                    <span class="catalog-eyebrow">BASE / WHY</span>
+                    <h2 id="strengths-title">Почему BASE.</h2>
+                    <p>Минимум лишнего — максимум понятных вещей, которые легко носить каждый день.</p>
+                </div>
+                <div class="strengths-grid">
+                    <article class="strength-card">
+                        <span class="strength-index">01</span>
+                        <h3>Отбор вместо перегруза</h3>
+                        <p>Небольшая коллекция без десятков случайных позиций. Каждая вещь сразу занимает своё место в гардеробе.</p>
+                    </article>
+                    <article class="strength-card">
+                        <span class="strength-index">02</span>
+                        <h3>Посадка и детали</h3>
+                        <p>Перед заказом можно посмотреть материал, посадку, цвет и доступные размеры на отдельной странице товара.</p>
+                    </article>
+                    <article class="strength-card">
+                        <span class="strength-index">03</span>
+                        <h3>Заказ без лишних шагов</h3>
+                        <p>Добавляй вещи в корзину или оформляй одну позицию сразу — заказ уходит напрямую в Telegram.</p>
+                    </article>
+                    <article class="strength-card">
+                        <span class="strength-index">04</span>
+                        <h3>Под заказ</h3>
+                        <p>Не нужно искать нужный размер по остаткам: позиции оформляются под заказ, срок доставки — 7–14 дней.</p>
+                    </article>
+                </div>
             </div>
         </section>
 
@@ -126,55 +158,6 @@
             </div>
         </div>
     </footer>
-
-    <div id="product-sheet-overlay" class="sheet-overlay">
-        <div id="product-sheet" class="bottom-sheet" role="dialog" aria-modal="true" aria-label="Информация о товаре">
-            <button class="sheet-close" id="sheet-close" aria-label="Закрыть">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-            </button>
-            <div class="sheet-content">
-                <div class="sheet-image-container">
-                    <img id="sheet-img" src="" alt="Товар">
-                </div>
-                <div class="sheet-info-container">
-                    <div class="sheet-header">
-                        <h2 id="sheet-title" class="sheet-title"></h2>
-                        <p id="sheet-subtitle" class="sheet-subtitle"></p>
-                        <p id="sheet-price" class="sheet-price"></p>
-                    </div>
-                    <div class="sheet-options">
-                        <div class="option-section" id="color-section">
-                            <label class="option-label">Цвет</label>
-                            <div class="chips-group" id="sheet-colors"></div>
-                        </div>
-                        <div class="option-section" id="size-section">
-                            <label class="option-label">Размер</label>
-                            <div class="chips-group" id="sheet-sizes"></div>
-                        </div>
-                    </div>
-                    <div class="sheet-details">
-                        <div class="detail-row" id="detail-material">
-                            <span class="detail-label">Материал</span>
-                            <span class="detail-value" id="val-material"></span>
-                        </div>
-                        <div class="detail-row" id="detail-fit">
-                            <span class="detail-label">Посадка</span>
-                            <span class="detail-value" id="val-fit"></span>
-                        </div>
-                        <div class="detail-row">
-                            <span class="detail-label">Доставка</span>
-                            <span class="detail-value">Под заказ · 7–14 дней</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="sheet-cta-container">
-                <button id="btn-order" class="btn-primary disabled">
-                    <span class="btn-text">Выберите размер</span>
-                </button>
-            </div>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 
