@@ -474,3 +474,5 @@ if (themeToggle) {
     window.__baseCart = () => cart;
 })();
 
+
+window.addEventListener('base:open-cart',()=>openCart());
