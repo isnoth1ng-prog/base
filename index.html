@@ -25,13 +25,15 @@
                 <a href="#catalog" class="btn-glass">Смотреть коллекцию</a>
             </div>
             <div class="hero-image">
-                <!-- We use the first image as a hero banner background -->
-                <img src="images_cards/card_jeans-blue.jpg" alt="Hero Fashion">
+                <img src="images_cards/card_jeans-blue.jpg" alt="BASE. коллекция одежды">
             </div>
         </section>
 
         <section id="catalog" class="catalog-section">
             <div class="container">
+                <div class="catalog-heading">
+                    <h2>Каталог</h2>
+                </div>
                 <div class="product-grid" id="products-grid">
                     <!-- Products rendered via JS -->
                 </div>
@@ -44,30 +46,29 @@
             <div class="footer-brand">BASE.</div>
             <div class="footer-links">
                 <a href="#catalog">Каталог</a>
-                <a href="https://t.me/nthngv" target="_blank">Telegram</a>
+                <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer">Telegram</a>
                 <a href="#">Доставка</a>
                 <a href="#">Возврат</a>
             </div>
         </div>
     </footer>
 
-    <!-- Liquid Glass Bottom Sheet / Modal -->
     <div id="product-sheet-overlay" class="sheet-overlay">
-        <div id="product-sheet" class="bottom-sheet">
+        <div id="product-sheet" class="bottom-sheet" role="dialog" aria-modal="true" aria-label="Информация о товаре">
             <button class="sheet-close" id="sheet-close" aria-label="Закрыть">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             </button>
             
             <div class="sheet-content">
                 <div class="sheet-image-container">
-                    <img id="sheet-img" src="" alt="Product">
+                    <img id="sheet-img" src="" alt="Товар">
                 </div>
                 
                 <div class="sheet-info-container">
                     <div class="sheet-header">
-                        <h2 id="sheet-title" class="sheet-title">Product Name</h2>
-                        <p id="sheet-subtitle" class="sheet-subtitle">Subtitle</p>
-                        <p id="sheet-price" class="sheet-price">0 ₽</p>
+                        <h2 id="sheet-title" class="sheet-title"></h2>
+                        <p id="sheet-subtitle" class="sheet-subtitle"></p>
+                        <p id="sheet-price" class="sheet-price"></p>
                     </div>
 
                     <div class="sheet-options">
@@ -95,8 +96,7 @@
                 </div>
             </div>
 
-            <!-- Sticky CTA -->
-            <div class="sheet-cta-container glass-panel">
+            <div class="sheet-cta-container">
                 <button id="btn-order" class="btn-primary disabled">
                     <span class="btn-text">Выберите размер</span>
                 </button>
