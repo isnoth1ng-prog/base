@@ -18,10 +18,6 @@
         <span class="base-island-cart-mini" id="base-island-mini-cart"></span>
       </button>
       <div class="base-island-expanded" aria-hidden="true">
-        <div class="base-island-top">
-          <div class="base-island-status"><span class="base-island-dot"></span><span id="base-island-status">BASE / READY</span></div>
-          <button class="base-island-close" type="button" aria-label="Закрыть">×</button>
-        </div>
         <div class="base-island-content" id="base-island-content"></div>
         <div class="base-island-actions">
           <a href="index.html#catalog" data-island-action="close">Каталог</a>
@@ -34,10 +30,8 @@
 
     const main=ui.querySelector('.base-island-main');
     const expanded=ui.querySelector('.base-island-expanded');
-    const close=ui.querySelector('.base-island-close');
     const content=ui.querySelector('#base-island-content');
     const context=ui.querySelector('.base-island-context');
-    const status=ui.querySelector('#base-island-status');
     const miniCart=ui.querySelector('#base-island-mini-cart');
 
     const vibrate=()=>{try{navigator.vibrate?.(7)}catch(e){}};
@@ -61,7 +55,6 @@
 
       if(p){
         context.textContent='PRODUCT';
-        status.textContent='BASE / PRODUCT';
         content.innerHTML=`
           <div class="base-island-product">
             <div class="base-island-product-thumb">${productImage()?'<img src="'+productImage()+'" alt="">':''}</div>
@@ -74,7 +67,6 @@
           </div>`;
       } else if(i.count){
         context.textContent='CART';
-        status.textContent='BASE / CART';
         content.innerHTML=`
           <div class="base-island-cart">
             <div class="base-island-cart-copy">
@@ -85,7 +77,6 @@
           </div>`;
       } else {
         context.textContent='CATALOG';
-        status.textContent='BASE / READY';
         content.innerHTML=`
           <div class="base-island-welcome">
             <span class="base-island-welcome-mark">BASE.</span>
@@ -125,7 +116,6 @@
     function flashAdded(){
       ui.classList.add('is-added');
       context.textContent='ADDED';
-      status.textContent='BASE / ADDED';
       content.innerHTML=`
         <div class="base-island-added">
           <span class="base-island-check">✓</span>
@@ -145,7 +135,6 @@
       main.classList.add('is-pressed');
       setOpen(!ui.classList.contains('is-expanded'));
     });
-    close.addEventListener('click',()=>setOpen(false,false));
 
     ui.addEventListener('click',e=>{
       const action=e.target.closest('[data-island-action]')?.dataset.islandAction;
