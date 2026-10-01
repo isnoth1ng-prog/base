@@ -1284,3 +1284,50 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .product-actions{grid-template-columns:1fr 1fr}
   .product-detail-spec{font-size:11px}
 }
+
+/* ===== BASE DYNAMIC ISLAND 2.0 ===== */
+.glass-header{width:100%;max-width:none;background:transparent;border:0;box-shadow:none;backdrop-filter:none;-webkit-backdrop-filter:none;top:10px;pointer-events:none}
+.glass-header .header-inner{position:relative;display:block;width:min(560px,calc(100% - 24px));min-height:0;margin:0 auto;padding:0;pointer-events:none}
+.glass-header>.header-inner>.brand-logo,.glass-header>.header-inner>.nav-links,.glass-header>.header-inner>.cart-btn,.glass-header>.header-inner>.theme-toggle{display:none}
+.base-island-ui{position:relative;width:100%;min-height:54px;border:1px solid rgba(255,255,255,.10);border-radius:28px;background:rgba(10,10,12,.90);box-shadow:0 12px 44px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(28px) saturate(170%);-webkit-backdrop-filter:blur(28px) saturate(170%);pointer-events:auto;transition:width .48s var(--spring),border-radius .42s var(--spring),box-shadow .35s ease,transform .25s ease;overflow:hidden;color:#f5f5f7}
+.base-island-ui.is-scrolled{box-shadow:0 16px 55px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08)}
+.base-island-main{width:100%;height:54px;display:flex;align-items:center;justify-content:center;gap:9px;padding:0 18px;color:#f5f5f7;position:relative}
+.base-island-mark{font-size:13px;font-weight:800;letter-spacing:-.5px}
+.base-island-context{font-size:9px;letter-spacing:1.4px;color:rgba(255,255,255,.38);font-weight:700}
+.base-island-ping{width:5px;height:5px;border-radius:50%;background:#f5f5f7;opacity:.7;box-shadow:0 0 0 4px rgba(255,255,255,.06)}
+.base-island-expanded{display:grid;grid-template-rows:auto auto auto;max-height:0;opacity:0;transform:translateY(-8px);pointer-events:none;transition:max-height .5s var(--spring),opacity .25s ease,transform .42s var(--spring);padding:0 16px}
+.base-island-ui.is-expanded{border-radius:25px;box-shadow:0 20px 70px rgba(0,0,0,.48),inset 0 1px 0 rgba(255,255,255,.09)}
+.base-island-ui.is-expanded .base-island-expanded{max-height:360px;opacity:1;transform:none;pointer-events:auto;padding-bottom:14px}
+.base-island-ui.is-expanded .base-island-main{height:48px;justify-content:flex-start;padding-left:17px}
+.base-island-ui.is-expanded .base-island-ping{display:none}
+.base-island-top{display:flex;align-items:center;justify-content:space-between;padding:2px 2px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.base-island-status{display:flex;align-items:center;gap:7px;font-size:9px;font-weight:700;letter-spacing:1.25px;color:rgba(255,255,255,.44)}
+.base-island-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.72)}
+.base-island-close{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.08);color:#fff;font-size:18px;line-height:1}
+.base-island-content{padding:14px 2px 13px;min-height:70px;display:flex;align-items:center}
+.base-island-welcome,.base-island-product,.base-island-cart,.base-island-added{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.base-island-welcome,.base-island-product-copy,.base-island-cart>div,.base-island-added>div{display:flex;flex-direction:column;min-width:0}
+.base-island-welcome strong,.base-island-product-copy strong,.base-island-cart strong,.base-island-added strong{font-size:13px;letter-spacing:-.2px}
+.base-island-welcome span,.base-island-product-copy span,.base-island-added span{font-size:10px;color:rgba(255,255,255,.42);margin-top:3px}
+.base-island-eyebrow{font-size:8px!important;text-transform:uppercase;letter-spacing:1.2px;color:rgba(255,255,255,.32)!important;margin:0 0 3px!important}
+.base-island-mini-action{flex:0 0 auto;min-height:32px;padding:0 12px;border-radius:10px;background:#f5f5f7;color:#09090b;font-size:10px;font-weight:800}
+.base-island-check{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#f5f5f7;color:#09090b;font-weight:900;font-size:16px;flex:0 0 auto}
+.base-island-actions{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.base-island-actions a,.base-island-actions button{min-height:34px;border-radius:10px;background:rgba(255,255,255,.055);color:rgba(255,255,255,.66);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;padding:0 5px;white-space:nowrap;transition:background .2s,color .2s,transform .15s}
+.base-island-actions a:hover,.base-island-actions button:hover{background:rgba(255,255,255,.11);color:#fff}
+.base-island-actions button:active,.base-island-actions a:active{transform:scale(.96)}
+.base-island-ui.is-added{animation:island-pop .45s var(--spring)}
+@keyframes island-pop{0%{transform:scale(.98)}55%{transform:scale(1.015)}100%{transform:scale(1)}}
+:root[data-theme="light"] .base-island-ui{background:rgba(10,10,12,.93);color:#f5f5f7;border-color:rgba(255,255,255,.12)}
+@media (max-width:600px){
+  .glass-header{top:max(8px,env(safe-area-inset-top))}
+  .glass-header .header-inner{width:calc(100% - 18px)}
+  .base-island-ui{min-height:50px;border-radius:26px}
+  .base-island-main{height:50px}
+  .base-island-actions{grid-template-columns:repeat(3,1fr)}
+  .base-island-actions a:nth-child(4),.base-island-actions button:nth-child(5){display:none}
+  .base-island-expanded{padding-left:13px;padding-right:13px}
+  .base-island-ui.is-expanded .base-island-main{height:46px}
+  .base-island-content{min-height:76px}
+}
+@media (prefers-reduced-motion:reduce){.base-island-ui,.base-island-expanded{transition:none!important;animation:none!important}}
