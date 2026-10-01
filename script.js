@@ -415,6 +415,7 @@ if (themeToggle) {
     }
 
     if (cartBtn) cartBtn.addEventListener('click', openCart);
+    window.addEventListener('base:open-cart', openCart);
     if (cartClose) cartClose.addEventListener('click', closeCart);
     if (cartSheet) cartSheet.addEventListener('click', (e) => {
         if (e.target === cartSheet) closeCart();
@@ -474,5 +475,3 @@ if (themeToggle) {
     window.__baseCart = () => cart;
 })();
 
-
-window.addEventListener('base:open-cart',()=>openCart());
