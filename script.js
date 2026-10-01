@@ -5,6 +5,7 @@ const products = [
         subtitle: 'Белый · Wide fit',
         price: 3490,
         image: 'images_cards/card_pants-white.jpg',
+        category: 'pants',
         material: '100% Хлопок (Деним)',
         fit: 'Wide / Relaxed',
         colors: ['White'],
@@ -16,6 +17,7 @@ const products = [
         subtitle: 'Бежевый · Relaxed fit',
         price: 3290,
         image: 'images_cards/card_pants-beige.jpg',
+        category: 'pants',
         material: 'Хлопок / Полиэстер',
         fit: 'Relaxed',
         colors: ['Beige'],
@@ -27,6 +29,7 @@ const products = [
         subtitle: 'Черный · Regular fit',
         price: 2990,
         image: 'images_cards/card_hoodie-black.jpg',
+        category: 'hoodie',
         material: '80% Хлопок, 20% Полиэстер',
         fit: 'Regular',
         colors: ['Black'],
@@ -38,6 +41,7 @@ const products = [
         subtitle: 'Серый меланж · Oversize',
         price: 2490,
         image: 'images_cards/card_sweatpants-grey.jpg',
+        category: 'pants',
         material: 'Хлопок (Футер 3-х нитка)',
         fit: 'Oversize',
         colors: ['Grey'],
@@ -49,6 +53,7 @@ const products = [
         subtitle: 'Черно-бордовый · Regular',
         price: 3190,
         image: 'images_cards/card_hoodie-redblack.jpg',
+        category: 'hoodie',
         material: 'Хлопок, Флис',
         fit: 'Regular',
         colors: ['Black/Red'],
@@ -60,6 +65,7 @@ const products = [
         subtitle: 'Голубой · Wide fit',
         price: 3490,
         image: 'images_cards/card_jeans-blue.jpg',
+        category: 'pants',
         material: '100% Хлопок (Деним)',
         fit: 'Wide',
         colors: ['Vintage Blue'],
@@ -71,6 +77,7 @@ const products = [
         subtitle: 'Черный · Wide fit',
         price: 3490,
         image: 'images_cards/card_jeans-black.jpg',
+        category: 'pants',
         material: '100% Хлопок (Деним)',
         fit: 'Wide',
         colors: ['Black'],
@@ -82,6 +89,7 @@ const products = [
         subtitle: 'Черный · Oversize',
         price: 3190,
         image: 'images_cards/card_hoodie-lsd.jpg',
+        category: 'hoodie',
         material: '80% Хлопок, 20% Полиэстер',
         fit: 'Oversize',
         colors: ['Black'],
@@ -93,6 +101,7 @@ const products = [
         subtitle: 'Черный · Wide fit',
         price: 2490,
         image: 'images_cards/card_sweatpants-black.jpg',
+        category: 'pants',
         material: 'Хлопок (Футер 3-х нитка)',
         fit: 'Wide / Oversize',
         colors: ['Black'],
@@ -100,21 +109,38 @@ const products = [
     }
 ];
 
+const TG_USERNAME = 'basewear_shop';
 const grid = document.getElementById('products-grid');
 const overlay = document.getElementById('product-sheet-overlay');
 const closeBtn = document.getElementById('sheet-close');
 const btnOrder = document.getElementById('btn-order');
+const tabs = document.getElementById('catalog-tabs');
 
 let currentProduct = null;
 let selectedColor = null;
 let selectedSize = null;
+let activeFilter = 'all';
 
-function renderCatalog() {
-    products.forEach(p => {
+function haptic() {
+    try {
+        if (navigator.vibrate) navigator.vibrate(8);
+    } catch (e) {}
+}
+
+function renderCatalog(filter) {
+    activeFilter = filter || 'all';
+    grid.innerHTML = '';
+
+    const list = activeFilter === 'all'
+        ? products
+        : products.filter(p => p.category === activeFilter);
+
+    list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
             <div class="product-img-box">
+                <div class="img-skeleton"></div>
                 <img src="${p.image}" alt="${p.title}" loading="lazy">
             </div>
             <div class="product-meta">
@@ -122,7 +148,22 @@ function renderCatalog() {
                 <div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
             </div>
         `;
-        card.addEventListener('click', () => openSheet(p));
+        const img = card.querySelector('img');
+        const sk = card.querySelector('.img-skeleton');
+        img.addEventListener('load', () => {
+            img.classList.add('loaded');
+            if (sk) sk.remove();
+        });
+        if (img.complete) {
+            img.classList.add('loaded');
+            if (sk) sk.remove();
+        }
+        card.addEventListener('click', () => {
+            haptic();
+            card.classList.add('tapped');
+            setTimeout(() => card.classList.remove('tapped'), 180);
+            openSheet(p);
+        });
         grid.appendChild(card);
     });
 }
@@ -136,7 +177,7 @@ function openSheet(product) {
     document.getElementById('sheet-title').textContent = product.title;
     document.getElementById('sheet-subtitle').textContent = product.subtitle;
     document.getElementById('sheet-price').textContent = `${product.price.toLocaleString('ru-RU')} ₽`;
-    
+
     const matRow = document.getElementById('detail-material');
     if (product.material) {
         matRow.style.display = 'flex';
@@ -166,6 +207,7 @@ function openSheet(product) {
                 selectedColor = color;
             }
             btn.onclick = () => {
+                haptic();
                 document.querySelectorAll('#sheet-colors .chip').forEach(c => c.classList.remove('active'));
                 btn.classList.add('active');
                 selectedColor = color;
@@ -175,7 +217,7 @@ function openSheet(product) {
         });
     } else {
         document.getElementById('color-section').style.display = 'none';
-        selectedColor = "Standard";
+        selectedColor = 'Standard';
     }
 
     const sizesBox = document.getElementById('sheet-sizes');
@@ -187,6 +229,7 @@ function openSheet(product) {
             btn.className = 'chip';
             btn.textContent = size;
             btn.onclick = () => {
+                haptic();
                 document.querySelectorAll('#sheet-sizes .chip').forEach(c => c.classList.remove('active'));
                 btn.classList.add('active');
                 selectedSize = size;
@@ -196,7 +239,7 @@ function openSheet(product) {
         });
     } else {
         document.getElementById('size-section').style.display = 'none';
-        selectedSize = "Standard";
+        selectedSize = 'Standard';
     }
 
     updateCtaState();
@@ -232,16 +275,29 @@ overlay.addEventListener('click', (e) => {
 
 btnOrder.addEventListener('click', () => {
     if (btnOrder.classList.contains('disabled')) return;
-    const tgUsername = "nthngv";
+    haptic();
     const message = `Здравствуйте! Хочу заказать:%0A%0AТовар: ${currentProduct.title}%0AЦвет: ${selectedColor}%0AРазмер: ${selectedSize}%0AЦена: ${currentProduct.price.toLocaleString('ru-RU')} ₽`;
-    const tgLink = `https://t.me/${tgUsername}?text=${message}`;
-    window.open(tgLink, '_blank');
+    window.open(`https://t.me/${TG_USERNAME}?text=${message}`, '_blank');
 });
 
-document.addEventListener('DOMContentLoaded', renderCatalog);
+if (tabs) {
+    tabs.addEventListener('click', (e) => {
+        const btn = e.target.closest('.tab');
+        if (!btn) return;
+        haptic();
+        tabs.querySelectorAll('.tab').forEach(t => {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        renderCatalog(btn.dataset.filter);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => renderCatalog('all'));
 
 const themeToggle = document.getElementById('theme-toggle');
-
 function setTheme(theme) {
     document.documentElement.dataset.theme = theme;
     try { localStorage.setItem('base-theme', theme); } catch (e) {}
@@ -249,13 +305,14 @@ function setTheme(theme) {
         const isLight = theme === 'light';
         themeToggle.setAttribute('aria-label', isLight ? 'Включить тёмную тему' : 'Включить светлую тему');
         themeToggle.setAttribute('title', isLight ? 'Тёмная тема' : 'Светлая тема');
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = isLight ? '#f4f4f2' : '#09090b';
     }
 }
-
 if (themeToggle) {
     setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
     themeToggle.addEventListener('click', () => {
-        const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
-        setTheme(nextTheme);
+        haptic();
+        setTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
     });
 }
