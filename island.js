@@ -20,9 +20,9 @@
       else{status.textContent='BASE / READY';content.innerHTML='<div class="base-island-welcome"><strong>BASE / ФОРМА БЕЗ ЛИШНЕГО</strong><span>Каталог · под заказ · 7–14 дней</span></div>';}
     }
     let closeTimer=null; function open(on=true){clearTimeout(closeTimer);ui.classList.toggle('is-expanded',on);main.setAttribute('aria-expanded',String(on));expanded.setAttribute('aria-hidden',String(!on));if(on){render();vibrate();closeTimer=setTimeout(()=>open(false),3800);}}
-    function openCart(){open(false);if(cartSheet){cartSheet.classList.add('open','active');document.body.style.overflow='hidden';}else cartBtn?.click();}
+    function openCart(){open(false);if(cartBtn){cartBtn.click();return}if(cartSheet){cartSheet.classList.add('open');cartSheet.classList.remove('active');document.body.style.overflow='hidden';}}
     function flashAdded(){ui.classList.add('is-added');status.textContent='BASE / ADDED';content.innerHTML='<div class="base-island-added"><span class="base-island-check">✓</span><div><strong>Добавлено в корзину</strong><span>'+ (productTitle()||'Вещь') +' · '+(document.getElementById('product-price')?.textContent||'')+'</span></div><button type="button" class="base-island-mini-action" data-island-action="cart">Корзина</button></div>';open(true);setTimeout(()=>{ui.classList.remove('is-added');open(false)},1800);}
-    main.addEventListener('click',()=>open(!ui.classList.contains('is-expanded'))); close.addEventListener('click',()=>open(false));
+    main.addEventListener('click',()=>{main.classList.remove('is-pressed');void main.offsetWidth;main.classList.add('is-pressed');open(!ui.classList.contains('is-expanded'));}); close.addEventListener('click',()=>open(false));
     ui.addEventListener('click',e=>{const action=e.target.closest('[data-island-action]')?.dataset.islandAction;if(action==='cart'){openCart();return}if(action==='theme'){themeBtn?.click();render();return}if(action==='close'){open(false);return}if(e.target.closest('[data-focus="product"]')){open(false);document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'});}});
     document.addEventListener('click',e=>{if(ui.classList.contains('is-expanded')&&!ui.contains(e.target))open(false);});
     document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false);});
