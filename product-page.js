@@ -34,7 +34,7 @@ function cartMessage(items=cart){
     lines.push('   '+money(x.price*x.qty));
     lines.push('');
   });
-  lines.push('Итого: '+money(total),'','ФИО:','Телефон:','Город / ПВЗ или адрес:','','Готов подтвердить заказ.');
+  lines.push('Итого: '+money(total),'','ФИО:','Телефон:','Город:','Адрес:','Почтовый индекс:','ПВЗ (если нужен):','','Готов подтвердить заказ.');
   return lines.join('\n');
 }
 
@@ -82,15 +82,15 @@ function buyNow(){
   window.open(telegramUrl(cartMessage([item])),'_blank','noopener,noreferrer');
 }
 
-function chips(box,values,setter){
+function chips(box,values,setter,autoSelectFirst=false){
   box.innerHTML='';
   (values||[]).forEach((v,i)=>{
     const b=document.createElement('button');
-    b.type='button';b.className='chip'+(i===0?' active':'');b.textContent=v;
+    b.type='button';b.className='chip'+(autoSelectFirst&&i===0?' active':'');b.textContent=v;
     b.addEventListener('click',()=>{box.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');setter(v);vibrate()});
     box.appendChild(b);
   });
-  setter(values&&values[0]||null);
+  setter(autoSelectFirst&&values&&values[0]||null);
 }
 
 function syncBuyState(){
@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('product-material').textContent=product.material;
   $('product-fit').textContent=product.fit;
 
-  chips($('product-colors'),product.colors,v=>{color=v;syncBuyState()});
-  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()});
+  chips($('product-colors'),product.colors,v=>{color=v;syncBuyState()},true);
+  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()},false);
 
   load();renderCart();
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   $('cart-order').addEventListener('click',e=>{
-    if(!cart.length){e.preventDefault();return}
+    if(!cart.length || cart.some(x=>!x.size)){e.preventDefault();return}
     e.preventDefault();
     window.open(telegramUrl(cartMessage()),'_blank','noopener,noreferrer');
   });
@@ -149,6 +149,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     vibrate();
   });
   syncBuyState();
+  window.addEventListener('base:open-cart',openCart);
 });
 
-window.addEventListener('base:open-cart',()=>openCart());
