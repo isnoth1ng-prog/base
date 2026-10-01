@@ -198,16 +198,14 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 /* HERO */
 .hero {
   position: relative;
-  height: clamp(420px, 55vh, 600px);
+  height: clamp(400px, 52vh, 560px);
   min-height: 400px;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
   padding: 0 7vw 64px;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.06), transparent 28%),
-    #0a0a0c;
+  background:#0a0a0c;
 }
 .hero::before {
   content: "BASE / EVERYDAY";
@@ -259,9 +257,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .btn-glass:hover { background: #fff; transform: translateY(-1px); }
 
 :root[data-theme="light"] .hero {
-  background:
-    radial-gradient(ellipse at 80% 20%, rgba(0,0,0,0.04), transparent 28%),
-    #ebebe9;
+  background:#ebebe9;
 }
 :root[data-theme="light"] .hero::before { color: rgba(17, 17, 19, 0.32); }
 :root[data-theme="light"] .hero-title { color: #111113; }
