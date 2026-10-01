@@ -57,80 +57,94 @@ a { text-decoration: none; color: inherit; }
 button { border: none; background: none; font-family: inherit; cursor: pointer; }
 .container { width: min(1200px, 100%); margin: 0 auto; padding: 0 24px; }
 
-/* HEADER — Dynamic Island style */
+/* HEADER — Dynamic Island */
 .glass-header {
   position: fixed;
-  top: max(10px, env(safe-area-inset-top));
+  top: max(11px, env(safe-area-inset-top));
   left: 50%;
   transform: translateX(-50%);
-  width: auto;
-  max-width: calc(100% - 28px);
-  background: rgba(20, 20, 22, 0.88);
-  backdrop-filter: blur(24px) saturate(160%);
-  -webkit-backdrop-filter: blur(24px) saturate(160%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: max-content;
+  max-width: calc(100% - 24px);
+  background: #0a0a0c;
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 100px;
   z-index: 100;
   box-shadow:
-    0 4px 24px rgba(0, 0, 0, 0.35),
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.08);
+    0 2px 16px rgba(0, 0, 0, 0.4),
+    0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.35s ease,
+              padding 0.35s ease;
 }
 :root[data-theme="light"] .glass-header {
-  background: rgba(255, 255, 255, 0.88);
-  border-color: rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 4px 20px rgba(0, 0, 0, 0.08),
-    inset 0 0.5px 0 rgba(255, 255, 255, 0.9);
+  background: rgba(20, 20, 22, 0.92);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.glass-header.island-compact {
+  transform: translateX(-50%) scale(0.94);
 }
 .header-inner {
   display: flex;
   align-items: center;
-  gap: 6px;
-  min-height: 38px;
-  padding: 4px 5px 4px 14px;
+  gap: 2px;
+  min-height: 36px;
+  padding: 3px 4px 3px 14px;
 }
 .brand-logo {
   font-weight: 700;
   font-size: 13px;
-  letter-spacing: -0.5px;
+  letter-spacing: -0.4px;
   white-space: nowrap;
-  padding-right: 4px;
+  color: #f5f5f7;
+  padding-right: 6px;
 }
-.nav-links { display: flex; align-items: center; gap: 2px; }
+.nav-links { display: flex; align-items: center; gap: 0; }
 .nav-links a {
-  display: inline-flex; align-items: center;
-  min-height: 28px; padding: 0 10px;
-  font-size: 12px; font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
   border-radius: 100px;
   transition: color 0.2s, background 0.2s;
 }
 .nav-links a:hover {
   color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-:root[data-theme="light"] .nav-links a { color: rgba(0, 0, 0, 0.45); }
-:root[data-theme="light"] .nav-links a:hover {
-  color: #111;
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(255, 255, 255, 0.1);
 }
 .theme-toggle {
-  width: 30px; height: 30px; flex: 0 0 30px;
-  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   border: none;
   margin-left: 2px;
+  transition: background 0.2s, transform 0.15s;
 }
-:root[data-theme="light"] .theme-toggle {
-  color: #111;
-  background: rgba(0, 0, 0, 0.06);
+.theme-toggle:active { transform: scale(0.9); }
+.theme-icon {
+  width: 13px;
+  height: 13px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
-.theme-icon { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .theme-icon-moon { display: none; }
 :root[data-theme="light"] .theme-icon-sun { display: none; }
 :root[data-theme="light"] .theme-icon-moon { display: block; }
+
 
 /* HERO */
 .hero {
@@ -417,7 +431,7 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 12px; }
   .product-img-box { border-radius: 12px; }
   .sheet-content { display: block; padding-bottom: 84px; }
-  .sheet-image-container img { max-height: 40vh; aspect-ratio: 1 / 1; object-fit: contain; }
+  .sheet-image-container img { max-height: 40vh; aspect-ratio: 1 / 1; object-fit: cover; }
   .sheet-info-container { padding: 18px 16px; }
   .bottom-sheet { max-height: 86vh; }
 }
