@@ -331,18 +331,78 @@ if (themeToggle) {
     });
 }
 
-/* Dynamic Island compact on scroll */
+/* Dynamic Island */
 (function () {
-    const header = document.querySelector('.glass-header');
-    if (!header) return;
+    const island = document.getElementById('island');
+    if (!island) return;
+
+    const nav = document.getElementById('island-nav');
+    const links = nav ? Array.from(nav.querySelectorAll('a[data-section]')) : [];
+    const sections = links
+        .map(a => document.getElementById(a.dataset.section))
+        .filter(Boolean);
+
+    let compact = false;
+    let open = false;
     let ticking = false;
-    window.addEventListener('scroll', () => {
+
+    function setCompact(on) {
+        if (compact === on) return;
+        compact = on;
+        island.classList.toggle('island-compact', on);
+        if (!on) {
+            open = false;
+            island.classList.remove('island-open');
+        }
+    }
+
+    function setOpen(on) {
+        open = on;
+        island.classList.toggle('island-open', on);
+    }
+
+    function onScroll() {
         if (ticking) return;
         ticking = true;
         requestAnimationFrame(() => {
-            header.classList.toggle('island-compact', window.scrollY > 40);
+            setCompact(window.scrollY > 48);
+            // scroll-spy
+            const y = window.scrollY + 120;
+            let current = null;
+            sections.forEach((sec, i) => {
+                if (sec.offsetTop <= y) current = links[i];
+            });
+            links.forEach(a => a.classList.toggle('active', a === current));
             ticking = false;
         });
-    }, { passive: true });
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Tap island in compact mode to expand nav
+    island.addEventListener('click', (e) => {
+        if (!compact) return;
+        // don't hijack real link/button clicks when already open
+        if (e.target.closest('a') || e.target.closest('button')) {
+            // if clicking a nav link while open, allow navigation then collapse
+            if (e.target.closest('a') && open) {
+                setTimeout(() => setOpen(false), 200);
+            }
+            return;
+        }
+        setOpen(!open);
+        try { if (navigator.vibrate) navigator.vibrate(6); } catch (err) {}
+    });
+
+    // Click outside closes expanded compact menu
+    document.addEventListener('click', (e) => {
+        if (open && !island.contains(e.target)) setOpen(false);
+    });
+
+    // Escape closes
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && open) setOpen(false);
+    });
 })();
 
