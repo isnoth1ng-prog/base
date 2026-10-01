@@ -435,10 +435,15 @@ if (themeToggle) {
                 <img src="${item.image}" alt="">
                 <div class="cart-row-info">
                     <div class="cart-row-title">${item.title}</div>
-                    <div class="cart-row-meta">${item.color} · ${item.size} · ${item.qty} шт</div>
+                    <div class="cart-row-meta">${item.color} · ${item.size}</div>
                     <div class="cart-row-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
+                    <div class="cart-qty">
+                        <button type="button" data-action="minus" data-idx="${idx}" aria-label="Уменьшить">−</button>
+                        <span>${item.qty}</span>
+                        <button type="button" data-action="plus" data-idx="${idx}" aria-label="Увеличить">+</button>
+                    </div>
                 </div>
-                <button type="button" class="cart-remove" data-idx="${idx}" aria-label="Убрать">×</button>
+                <button type="button" class="cart-remove" data-action="remove" data-idx="${idx}" aria-label="Удалить">×</button>
             </div>
         `).join('');
     }
@@ -491,10 +496,14 @@ if (themeToggle) {
     });
 
     if (cartItems) cartItems.addEventListener('click', (e) => {
-        const btn = e.target.closest('.cart-remove');
+        const btn = e.target.closest('[data-action]');
         if (!btn) return;
         const idx = +btn.dataset.idx;
-        cart.splice(idx, 1);
+        const item = cart[idx];
+        if (!item) return;
+        if (btn.dataset.action === 'plus') item.qty += 1;
+        if (btn.dataset.action === 'minus') { item.qty -= 1; if (item.qty <= 0) cart.splice(idx, 1); }
+        if (btn.dataset.action === 'remove') cart.splice(idx, 1);
         saveCart();
         updateCartUI();
         haptic();
