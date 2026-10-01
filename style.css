@@ -426,3 +426,131 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .hero { height: 42vh; min-height: 310px; }
   .hero-title { font-size: 34px; }
 }
+
+
+/* CATALOG TABS */
+.catalog-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.tab {
+  min-height: 36px;
+  padding: 0 16px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: rgba(127, 127, 127, 0.08);
+  border: 1px solid transparent;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.tab:active { transform: scale(0.96); }
+.tab.active {
+  background: var(--chip-active);
+  color: var(--chip-text-active);
+}
+:root[data-theme="light"] .tab {
+  background: rgba(0, 0, 0, 0.04);
+}
+:root[data-theme="light"] .tab.active {
+  background: #111113;
+  color: #fff;
+}
+
+/* SKELETON + IMAGE LOAD */
+.img-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(127, 127, 127, 0.08) 0%,
+    rgba(127, 127, 127, 0.16) 50%,
+    rgba(127, 127, 127, 0.08) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.2s ease-in-out infinite;
+  border-radius: inherit;
+}
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.product-img-box img {
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.5s var(--ease-out);
+}
+.product-img-box img.loaded { opacity: 1; }
+
+/* SOFT HAPTIC TAP */
+.product-card.tapped {
+  transform: scale(0.97);
+  transition: transform 0.15s ease;
+}
+
+/* HOW TO ORDER */
+.how-section {
+  padding: 40px 0 96px;
+  border-top: 1px solid var(--border-light);
+}
+.how-heading {
+  margin-bottom: 28px;
+}
+.how-heading h2 {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 600;
+  letter-spacing: -1.4px;
+  line-height: 1.05;
+  margin-top: 8px;
+}
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.how-card {
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: rgba(127, 127, 127, 0.06);
+  border: 1px solid var(--border-light);
+}
+:root[data-theme="light"] .how-card {
+  background: #fff;
+}
+.how-num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--text-secondary);
+  margin-bottom: 14px;
+}
+.how-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  margin-bottom: 8px;
+}
+.how-card p {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.how-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+.how-note {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .how-grid { grid-template-columns: 1fr; gap: 10px; }
+  .how-section { padding: 32px 0 72px; }
+  .catalog-tabs { margin-bottom: 18px; }
+  .tab { min-height: 34px; padding: 0 14px; font-size: 12px; }
+}
