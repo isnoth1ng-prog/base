@@ -109,7 +109,11 @@ const products = [
     }
 ];
 
-const TG_USERNAME = 'basewear_shop';
+const TG_USERNAME = 'nthngv';
+const CHANNEL_URL = 'https://t.me/basewear_shop';
+
+let cart = [];
+
 const grid = document.getElementById('products-grid');
 const overlay = document.getElementById('product-sheet-overlay');
 const closeBtn = document.getElementById('sheet-close');
@@ -274,25 +278,7 @@ overlay.addEventListener('click', (e) => {
     if (e.target === overlay) closeSheet();
 });
 
-btnOrder.addEventListener('click', () => {
-    if (btnOrder.classList.contains('disabled')) return;
-    haptic();
-    const message = [
-        'Здравствуйте. Хочу оформить заказ.',
-        '',
-        `Товар: ${currentProduct.title}`,
-        `Цвет: ${selectedColor}`,
-        `Размер: ${selectedSize}`,
-        `Цена: ${currentProduct.price.toLocaleString('ru-RU')} ₽`,
-        '',
-        'ФИО:',
-        'Телефон:',
-        'Город / ПВЗ или адрес:',
-        '',
-        'Готов подтвердить заказ.'
-    ].join('%0A');
-    window.open(`https://t.me/${TG_USERNAME}?text=${message}`, '_blank');
-});
+/* btnOrder wired in initCartUI */
 
 if (tabs) {
     tabs.addEventListener('click', (e) => {
@@ -404,5 +390,153 @@ if (themeToggle) {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && open) setOpen(false);
     });
+})();
+
+/* Cart + order via @nthngv */
+(function () {
+    const cartBtn = document.getElementById('cart-btn');
+    const cartCount = document.getElementById('cart-count');
+    const cartSheet = document.getElementById('cart-sheet-overlay');
+    const cartClose = document.getElementById('cart-close');
+    const cartItems = document.getElementById('cart-items');
+    const cartOrder = document.getElementById('cart-order');
+    const cartEmpty = document.getElementById('cart-empty');
+
+    function saveCart() {
+        try { localStorage.setItem('base_cart', JSON.stringify(cart)); } catch (e) {}
+    }
+    function loadCart() {
+        try {
+            const raw = localStorage.getItem('base_cart');
+            if (raw) cart = JSON.parse(raw) || [];
+        } catch (e) { cart = []; }
+    }
+    function cartKey(item) {
+        return item.id + '|' + item.color + '|' + item.size;
+    }
+    function updateCartUI() {
+        const n = cart.reduce((s, i) => s + i.qty, 0);
+        if (cartCount) {
+            cartCount.textContent = n;
+            cartCount.hidden = n === 0;
+        }
+        if (cartBtn) cartBtn.classList.toggle('has-items', n > 0);
+        if (!cartItems) return;
+        if (cart.length === 0) {
+            cartItems.innerHTML = '';
+            if (cartEmpty) cartEmpty.hidden = false;
+            if (cartOrder) cartOrder.classList.add('disabled');
+            return;
+        }
+        if (cartEmpty) cartEmpty.hidden = true;
+        if (cartOrder) cartOrder.classList.remove('disabled');
+        cartItems.innerHTML = cart.map((item, idx) => `
+            <div class="cart-row" data-idx="${idx}">
+                <img src="${item.image}" alt="">
+                <div class="cart-row-info">
+                    <div class="cart-row-title">${item.title}</div>
+                    <div class="cart-row-meta">${item.color} · ${item.size} · ${item.qty} шт</div>
+                    <div class="cart-row-price">${(item.price * item.qty).toLocaleString('ru-RU')} ₽</div>
+                </div>
+                <button type="button" class="cart-remove" data-idx="${idx}" aria-label="Убрать">×</button>
+            </div>
+        `).join('');
+    }
+
+    loadCart();
+    updateCartUI();
+
+    function addCurrentToCart() {
+        if (!currentProduct || !selectedColor || !selectedSize) return;
+        const entry = {
+            id: currentProduct.id,
+            title: currentProduct.title,
+            color: selectedColor,
+            size: selectedSize,
+            price: currentProduct.price,
+            image: currentProduct.image,
+            qty: 1
+        };
+        const key = cartKey(entry);
+        const existing = cart.find(i => cartKey(i) === key);
+        if (existing) existing.qty += 1;
+        else cart.push(entry);
+        saveCart();
+        updateCartUI();
+        haptic();
+        // brief feedback on button
+        if (btnOrder) {
+            const prev = btnOrder.textContent;
+            btnOrder.textContent = 'Добавлено';
+            setTimeout(() => { btnOrder.textContent = 'В корзину'; }, 900);
+        }
+    }
+
+    function openCart() {
+        if (!cartSheet) return;
+        updateCartUI();
+        cartSheet.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+        if (!cartSheet) return;
+        cartSheet.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    if (cartBtn) cartBtn.addEventListener('click', openCart);
+    if (cartClose) cartClose.addEventListener('click', closeCart);
+    if (cartSheet) cartSheet.addEventListener('click', (e) => {
+        if (e.target === cartSheet) closeCart();
+    });
+
+    if (cartItems) cartItems.addEventListener('click', (e) => {
+        const btn = e.target.closest('.cart-remove');
+        if (!btn) return;
+        const idx = +btn.dataset.idx;
+        cart.splice(idx, 1);
+        saveCart();
+        updateCartUI();
+        haptic();
+    });
+
+    // Product sheet primary button = add to cart
+    if (btnOrder) {
+        btnOrder.addEventListener('click', () => {
+            if (btnOrder.classList.contains('disabled')) return;
+            addCurrentToCart();
+        });
+    }
+
+    // Order all from cart → personal TG
+    if (cartOrder) {
+        cartOrder.addEventListener('click', () => {
+            if (!cart.length) return;
+            const lines = [
+                'Здравствуйте. Хочу оформить заказ.',
+                ''
+            ];
+            let total = 0;
+            cart.forEach((item, i) => {
+                total += item.price * item.qty;
+                lines.push(`${i + 1}. ${item.title}`);
+                lines.push(`   Цвет: ${item.color} · Размер: ${item.size} · ${item.qty} шт`);
+                lines.push(`   ${(item.price * item.qty).toLocaleString('ru-RU')} ₽`);
+                lines.push('');
+            });
+            lines.push(`Итого: ${total.toLocaleString('ru-RU')} ₽`);
+            lines.push('');
+            lines.push('ФИО:');
+            lines.push('Телефон:');
+            lines.push('Город / ПВЗ или адрес:');
+            lines.push('');
+            lines.push('Готов подтвердить заказ.');
+            const message = lines.join('%0A');
+            window.open(`https://t.me/${TG_USERNAME}?text=${message}`, '_blank');
+        });
+    }
+
+    // Expose for debugging
+    window.__baseCart = () => cart;
 })();
 
