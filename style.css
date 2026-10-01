@@ -1361,3 +1361,53 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 :root[data-theme="light"] .base-island-ui{background:rgba(10,10,12,.95);color:#f5f5f7;border-color:rgba(255,255,255,.12)}
 @media(max-width:600px){.glass-header{top:max(7px,env(safe-area-inset-top))}.base-island-ui{width:158px;min-height:44px;border-radius:23px}.base-island-main{height:44px}.base-island-ui.is-expanded{width:calc(100vw - 20px)}.base-island-ui.is-expanded .base-island-main{height:40px}.base-island-actions{grid-template-columns:repeat(3,1fr)}.base-island-actions a:nth-child(4),.base-island-actions button:nth-child(5){display:none}.base-island-expanded{padding-left:11px;padding-right:11px}}
 @media(prefers-reduced-motion:reduce){.base-island-ui,.base-island-expanded{transition:none!important;animation:none!important}}
+
+/* ===== BASE ISLAND 3.0 — refined morph / no square inner UI ===== */
+.base-island-ui{width:184px!important;min-height:48px!important;margin:0 auto!important;border-radius:999px!important;transform-origin:50% 0;will-change:width,border-radius,box-shadow}
+.base-island-ui.is-expanded{width:min(420px,calc(100vw - 24px))!important;border-radius:30px!important}
+.base-island-ui.is-scrolled{box-shadow:0 15px 52px rgba(0,0,0,.40),inset 0 1px 0 rgba(255,255,255,.08)!important}
+.base-island-main{border-radius:inherit!important;transition:height .46s var(--spring),padding .46s var(--spring),transform .2s ease!important}
+.base-island-main.is-pressed{animation:island-press-soft .36s var(--spring)}
+@keyframes island-press-soft{0%{transform:scale(1)}38%{transform:scale(.968)}72%{transform:scale(1.008)}100%{transform:scale(1)}}
+.base-island-expanded{overflow:hidden}
+.base-island-top{padding-left:4px!important;padding-right:2px!important}
+.base-island-close{width:27px!important;height:27px!important;border-radius:50%!important;transition:transform .22s ease,background .22s ease!important}
+.base-island-close:hover{transform:rotate(90deg);background:rgba(255,255,255,.13)}
+.base-island-content{min-height:72px!important;padding:13px 3px!important;animation:none!important}
+.base-island-welcome,.base-island-product,.base-island-cart,.base-island-added{border-radius:20px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.055);min-height:66px;padding:10px 11px;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.base-island-welcome{justify-content:flex-start;gap:10px}
+.base-island-welcome-mark{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;flex:0 0 auto;background:#f5f5f7;color:#09090b;font-size:8px;font-weight:900;letter-spacing:-.4px}
+.base-island-product-thumb{width:40px;height:50px;border-radius:11px;overflow:hidden;flex:0 0 auto;background:rgba(255,255,255,.08)}
+.base-island-product-thumb img{width:100%;height:100%;display:block;object-fit:cover}
+.base-island-product-copy,.base-island-cart-copy{flex:1;min-width:0}
+.base-island-product-copy strong,.base-island-cart-copy strong,.base-island-welcome strong,.base-island-added strong{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.base-island-mini-action{border-radius:999px!important;min-height:34px!important;padding:0 13px!important;transition:transform .18s ease,box-shadow .18s ease!important}
+.base-island-mini-action:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(0,0,0,.20)}
+.base-island-actions{gap:3px!important;padding-top:2px}
+.base-island-actions a,.base-island-actions button{min-height:34px!important;border-radius:999px!important;background:transparent!important;border:1px solid transparent!important;color:rgba(255,255,255,.56)!important}
+.base-island-actions a:hover,.base-island-actions button:hover{background:rgba(255,255,255,.065)!important;border-color:rgba(255,255,255,.06)!important;color:#fff!important}
+.base-island-ui.is-expanded .base-island-content{animation:island-content-soft .42s .05s both var(--spring)!important}
+.base-island-ui.is-expanded .base-island-actions{animation:island-actions-soft .42s .10s both var(--spring)!important}
+@keyframes island-content-soft{0%{opacity:0;transform:translateY(-7px) scale(.985)}100%{opacity:1;transform:none}}
+@keyframes island-actions-soft{0%{opacity:0;transform:translateY(5px)}100%{opacity:1;transform:none}}
+.base-island-ui.is-added{animation:island-added-soft .55s var(--spring)!important}
+@keyframes island-added-soft{0%{transform:scale(.98)}45%{transform:scale(1.018)}100%{transform:scale(1)}}
+.base-island-ui.is-added::after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(105deg,transparent 28%,rgba(255,255,255,.10) 48%,transparent 68%);transform:translateX(-110%);animation:island-glint .62s .08s ease-out both}
+@keyframes island-glint{to{transform:translateX(110%)}}
+.base-island-cart-mini.visible{animation:island-badge-soft .38s var(--spring)}
+@keyframes island-badge-soft{0%{opacity:0;transform:scale(.65)}70%{opacity:1;transform:scale(1.1)}100%{transform:scale(1)}}
+@media(max-width:600px){
+ .base-island-ui{width:158px!important;min-height:44px!important;border-radius:999px!important}
+ .base-island-ui.is-expanded{width:calc(100vw - 20px)!important;border-radius:27px!important}
+ .base-island-main{height:44px!important}
+ .base-island-ui.is-expanded .base-island-main{height:41px!important}
+ .base-island-content{min-height:76px!important}
+ .base-island-welcome,.base-island-product,.base-island-cart,.base-island-added{min-height:68px;padding:10px}
+ .base-island-actions{grid-template-columns:repeat(4,1fr)!important}
+ .base-island-actions a:nth-child(4),.base-island-actions button:nth-child(4){display:flex!important}
+ .base-island-actions a,.base-island-actions button{font-size:8px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .base-island-main.is-pressed,.base-island-ui.is-expanded .base-island-content,.base-island-ui.is-expanded .base-island-actions,.base-island-cart-mini.visible,.base-island-ui.is-added{animation:none!important}
+ .base-island-ui.is-added::after{display:none!important}
+}
