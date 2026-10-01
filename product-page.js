@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 const id=new URLSearchParams(location.search).get('id');product=PRODUCTS.find(x=>x.id===id)||PRODUCTS[0];
 $('product-image').src=product.image;$('product-image').alt=product.title;$('product-title').textContent=product.title;$('product-subtitle').textContent=product.subtitle;$('product-price').textContent=money(product.price);$('product-material').textContent=product.material;$('product-fit').textContent=product.fit;
 chips($('product-colors'),product.colors,v=>color=v);chips($('product-sizes'),product.sizes,v=>size=v);
-$('product-add').addEventListener('click',add);load();renderCart();
+$('product-add').addEventListener('click',add);load();renderCart();const themeBtn=$('theme-toggle');if(themeBtn)themeBtn.addEventListener('click',()=>{const next=document.documentElement.dataset.theme==='light'?'dark':'light';document.documentElement.dataset.theme=next;try{localStorage.setItem('base-theme',next)}catch(e){};vibrate()});
 $('cart-btn').addEventListener('click',openCart);$('cart-close').addEventListener('click',closeCart);$('cart-sheet-overlay').addEventListener('click',e=>{if(e.target.id==='cart-sheet-overlay')closeCart()});
 $('cart-items').addEventListener('click',e=>{const b=e.target.closest('.cart-remove');if(!b)return;cart.splice(+b.dataset.i,1);save();renderCart();vibrate()});
 });
