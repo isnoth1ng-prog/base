@@ -150,3 +150,5 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
   syncBuyState();
 });
+
+window.addEventListener('base:open-cart',()=>openCart());
