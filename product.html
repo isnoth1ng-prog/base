@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>BASE. — Товар</title>
+  <meta name="theme-color" content="#09090b">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>try{if(localStorage.getItem("base-theme")==="light")document.documentElement.dataset.theme="light"}catch(e){}</script>
+</head>
+<body>
+  <header class="glass-header" id="island">
+    <div class="header-inner">
+      <a href="index.html#catalog" class="brand-logo">BASE.</a>
+      <nav class="nav-links" id="island-nav">
+        <a href="index.html#catalog">Каталог</a>
+        <a href="index.html#how">Заказ</a>
+      </nav>
+      <button class="cart-btn" id="cart-btn" type="button" aria-label="Корзина" title="Корзина">
+        <svg viewBox="0 0 24 24" class="cart-icon" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 6 5 3H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="20" r="1.2" fill="currentColor"/><circle cx="18" cy="20" r="1.2" fill="currentColor"/></svg>
+        <span class="cart-count" id="cart-count" hidden>0</span>
+      </button>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Переключить тему">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.7 8.7 0 1 0 12 12Z"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="product-page" id="product-page">
+    <div class="container">
+      <div class="product-page-top">
+        <a href="index.html#catalog" class="back-link">← Вернуться в каталог</a>
+      </div>
+      <section class="product-detail" aria-live="polite">
+        <div class="product-detail-media"><img id="product-image" src="" alt=""></div>
+        <div class="product-detail-info">
+          <div class="product-detail-kicker">BASE / PRODUCT</div>
+          <h1 class="product-detail-title" id="product-title"></h1>
+          <p class="product-detail-subtitle" id="product-subtitle"></p>
+          <div class="product-detail-price" id="product-price"></div>
+
+          <div class="product-option">
+            <span class="product-option-label">Цвет</span>
+            <div class="chips-group" id="product-colors"></div>
+          </div>
+          <div class="product-option">
+            <span class="product-option-label">Размер</span>
+            <div class="chips-group" id="product-sizes"></div>
+          </div>
+
+          <div class="product-actions">
+            <button class="product-add" id="product-add" type="button">В корзину</button>
+            <button class="product-buy" id="product-buy" type="button">Заказать сейчас</button>
+          </div>
+
+          <div class="product-detail-specs">
+            <div class="product-detail-spec"><span>Материал</span><strong id="product-material"></strong></div>
+            <div class="product-detail-spec"><span>Посадка</span><strong id="product-fit"></strong></div>
+            <div class="product-detail-spec"><span>Доставка</span><strong>7–14 дней</strong></div>
+            <div class="product-detail-spec"><span>Оформление</span><strong>Telegram</strong></div>
+          </div>
+          <p class="product-detail-note">Выбери размер и цвет, затем добавь вещь в корзину или оформи её сразу. После подтверждения заказа согласуем оплату и данные для доставки.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="sheet-overlay" id="cart-sheet-overlay">
+    <div class="product-sheet cart-sheet">
+      <button class="sheet-close" id="cart-close" type="button" aria-label="Закрыть">×</button>
+      <div class="sheet-body">
+        <h2 class="cart-title">Корзина</h2>
+        <p class="cart-empty" id="cart-empty">Пока пусто. Добавь вещь из каталога.</p>
+        <div class="cart-items" id="cart-items"></div>
+        <button class="btn-order disabled" id="cart-order" type="button">Оформить в Telegram</button>
+        <p class="cart-note">Заказ уйдёт в личные сообщения @nthngv</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="product-page.js"></script>
+</body>
+</html>
