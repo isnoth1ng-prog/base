@@ -1,148 +1,33 @@
-/* BASE Dynamic Island — shared UI for home + product pages */
+/* BASE Dynamic Island — compact by default, contextual when opened */
 (function(){
-  function ready(fn){ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',fn); else fn(); }
-  ready(function(){
-    const header=document.getElementById('island');
-    if(!header) return;
-    const inner=header.querySelector('.header-inner');
-    if(!inner) return;
-
-    const cartBtn=document.getElementById('cart-btn');
-    const themeBtn=document.getElementById('theme-toggle');
-
-    const ui=document.createElement('div');
-    ui.className='base-island-ui';
-    ui.innerHTML=`
-      <button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть BASE">
-        <span class="base-island-mark">BASE.</span>
-        <span class="base-island-context" id="base-island-context">CATALOG</span>
-        <span class="base-island-ping" aria-hidden="true"></span>
-      </button>
-      <div class="base-island-expanded" aria-hidden="true">
-        <div class="base-island-top">
-          <div class="base-island-status">
-            <span class="base-island-dot"></span>
-            <span id="base-island-status">BASE / READY</span>
-          </div>
-          <button class="base-island-close" type="button" aria-label="Закрыть">×</button>
-        </div>
-        <div class="base-island-content" id="base-island-content"></div>
-        <div class="base-island-actions">
-          <a href="index.html#catalog" data-island-action="catalog">Каталог</a>
-          <button type="button" data-island-action="cart">Корзина <span id="base-island-count"></span></button>
-          <a href="index.html#how" data-island-action="how">Как заказать</a>
-          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer">Telegram</a>
-          <button type="button" data-island-action="theme">Тема</button>
-        </div>
-      </div>
-    `;
+  const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn):fn();
+  ready(()=>{
+    const header=document.getElementById('island'), inner=header?.querySelector('.header-inner');
+    if(!header||!inner)return;
+    const cartBtn=document.getElementById('cart-btn'), themeBtn=document.getElementById('theme-toggle'), cartSheet=document.getElementById('cart-sheet-overlay');
+    const ui=document.createElement('div'); ui.className='base-island-ui';
+    ui.innerHTML='<button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть меню BASE"><span class="base-island-mark">BASE.</span><span class="base-island-context">CATALOG</span><span class="base-island-cart-mini" id="base-island-mini-cart"></span></button><div class="base-island-expanded" aria-hidden="true"><div class="base-island-top"><div class="base-island-status"><span class="base-island-dot"></span><span id="base-island-status">BASE / READY</span></div><button class="base-island-close" type="button" aria-label="Закрыть">×</button></div><div class="base-island-content" id="base-island-content"></div><div class="base-island-actions"><a href="index.html#catalog" data-island-action="close">Каталог</a><button type="button" data-island-action="cart">Корзина <span id="base-island-count"></span></button><a href="index.html#how" data-island-action="close">Как заказать</a><a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" data-island-action="close">Telegram</a><button type="button" data-island-action="theme">Тема</button></div></div>';
     inner.appendChild(ui);
-
-    const main=ui.querySelector('.base-island-main');
-    const expanded=ui.querySelector('.base-island-expanded');
-    const close=ui.querySelector('.base-island-close');
-    const content=ui.querySelector('#base-island-content');
-    const context=ui.querySelector('#base-island-context');
-    const status=ui.querySelector('#base-island-status');
-    const countEl=ui.querySelector('#base-island-count');
-
-    function vibrate(){try{if(navigator.vibrate)navigator.vibrate(7)}catch(e){}}
-    function getCart(){
-      try{return JSON.parse(localStorage.getItem('base_cart')||'[]')||[]}catch(e){return []}
+    const main=ui.querySelector('.base-island-main'), expanded=ui.querySelector('.base-island-expanded'), close=ui.querySelector('.base-island-close'), content=ui.querySelector('#base-island-content'), context=ui.querySelector('.base-island-context'), status=ui.querySelector('#base-island-status'), countEl=ui.querySelector('#base-island-count'), miniCart=ui.querySelector('#base-island-mini-cart');
+    const vibrate=()=>{try{navigator.vibrate?.(7)}catch(e){}};
+    const getCart=()=>{try{return JSON.parse(localStorage.getItem('base_cart')||'[]')||[]}catch(e){return[]}};
+    const info=()=>{const cart=getCart();return{cart,count:cart.reduce((n,x)=>n+Number(x.qty||0),0),total:cart.reduce((n,x)=>n+(Number(x.price)||0)*Number(x.qty||0),0)}};
+    const money=n=>Number(n).toLocaleString('ru-RU')+' ₽';
+    const productTitle=()=>document.getElementById('product-title')?.textContent?.trim()||'';
+    function render(){ const i=info(),p=productTitle(); miniCart.textContent=i.count>0?i.count:''; miniCart.classList.toggle('visible',i.count>0); countEl.textContent=i.count?'· '+i.count:''; context.textContent=p?'PRODUCT':'CATALOG';
+      if(p){status.textContent='BASE / PRODUCT';content.innerHTML='<div class="base-island-product"><div class="base-island-product-copy"><span class="base-island-eyebrow">Сейчас открыто</span><strong>'+p+'</strong><span>'+(document.getElementById('product-price')?.textContent||'')+' · 7–14 дней</span></div><button type="button" class="base-island-mini-action" data-focus="product">Товар</button></div>';}
+      else if(i.count){status.textContent='BASE / CART';content.innerHTML='<div class="base-island-cart"><div><span class="base-island-eyebrow">Корзина</span><strong>'+i.count+' '+(i.count===1?'вещь':'вещей')+' · '+money(i.total)+'</strong></div><button type="button" class="base-island-mini-action" data-island-action="cart">Открыть</button></div>';}
+      else{status.textContent='BASE / READY';content.innerHTML='<div class="base-island-welcome"><strong>BASE / ФОРМА БЕЗ ЛИШНЕГО</strong><span>Каталог · под заказ · 7–14 дней</span></div>';}
     }
-    function cartInfo(){
-      const cart=getCart();
-      const count=cart.reduce((n,x)=>n+Number(x.qty||0),0);
-      const total=cart.reduce((n,x)=>n+(Number(x.price)||0)*Number(x.qty||0),0);
-      return {cart,count,total};
-    }
-    function money(n){return Number(n).toLocaleString('ru-RU')+' ₽'}
-    function pageProduct(){
-      return document.getElementById('product-title')?.textContent?.trim() || '';
-    }
-    function setContext(){
-      const p=pageProduct();
-      context.textContent=p ? 'PRODUCT' : (location.hash==='#how' ? 'ORDER' : 'CATALOG');
-    }
-    function render(){
-      const info=cartInfo();
-      countEl.textContent=info.count ? '· '+info.count : '';
-      const p=pageProduct();
-      if(p){
-        status.textContent='BASE / PRODUCT';
-        content.innerHTML=`
-          <div class="base-island-product">
-            <div class="base-island-product-copy">
-              <span class="base-island-eyebrow">Сейчас открыто</span>
-              <strong>${p}</strong>
-              <span>${document.getElementById('product-price')?.textContent||''} · 7–14 дней</span>
-            </div>
-            <button type="button" class="base-island-mini-action" data-focus="product">Товар</button>
-          </div>`;
-      }else if(info.count){
-        status.textContent='BASE / CART';
-        content.innerHTML=`
-          <div class="base-island-cart">
-            <div>
-              <span class="base-island-eyebrow">Корзина</span>
-              <strong>${info.count} ${info.count===1?'вещь':'вещей'} · ${money(info.total)}</strong>
-            </div>
-            <button type="button" class="base-island-mini-action" data-island-action="cart">Открыть</button>
-          </div>`;
-      }else{
-        status.textContent='BASE / READY';
-        content.innerHTML=`
-          <div class="base-island-welcome">
-            <strong>Форма, в которой удобно быть собой.</strong>
-            <span>Каталог · под заказ · 7–14 дней</span>
-          </div>`;
-      }
-    }
-    function setOpen(on){
-      ui.classList.toggle('is-expanded',on);
-      main.setAttribute('aria-expanded',String(on));
-      expanded.setAttribute('aria-hidden',String(!on));
-      if(on){render();vibrate()}
-    }
-    function flashAdded(){
-      ui.classList.add('is-added');
-      status.textContent='BASE / ADDED';
-      content.innerHTML=`
-        <div class="base-island-added">
-          <span class="base-island-check">✓</span>
-          <div><strong>Добавлено в корзину</strong><span>${pageProduct()||'Вещь'} · ${document.getElementById('product-price')?.textContent||''}</span></div>
-          <button type="button" class="base-island-mini-action" data-island-action="cart">Корзина</button>
-        </div>`;
-      setOpen(true);
-      setTimeout(()=>{ui.classList.remove('is-added');render()},2200);
-    }
-
-    main.addEventListener('click',()=>setOpen(!ui.classList.contains('is-expanded')));
-    close.addEventListener('click',()=>setOpen(false));
-    ui.addEventListener('click',e=>{
-      const action=e.target.closest('[data-island-action]')?.dataset.islandAction;
-      if(!action) return;
-      if(action==='cart'){ cartBtn?.click(); setOpen(false); }
-      if(action==='theme'){ themeBtn?.click(); render(); }
-      if(action==='catalog'){ setOpen(false); }
-      if(action==='how'){ setOpen(false); }
-    });
-    ui.addEventListener('click',e=>{
-      const focus=e.target.closest('[data-focus="product"]');
-      if(focus){ setOpen(false); document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'}); }
-    });
-    document.addEventListener('click',e=>{
-      if(ui.classList.contains('is-expanded') && !ui.contains(e.target)) setOpen(false);
-    });
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false)});
-    window.addEventListener('storage',render);
-    window.addEventListener('hashchange',setContext);
-    window.addEventListener('scroll',()=>{ if(window.scrollY>40) ui.classList.add('is-scrolled'); else ui.classList.remove('is-scrolled') },{passive:true});
-
-    const add=document.getElementById('product-add');
-    if(add) add.addEventListener('click',()=>{ if(!add.classList.contains('disabled')) setTimeout(flashAdded,40) });
-    if(cartBtn) cartBtn.addEventListener('click',()=>{setTimeout(render,50)});
-
-    setContext(); render();
+    function open(on=true){ui.classList.toggle('is-expanded',on);main.setAttribute('aria-expanded',String(on));expanded.setAttribute('aria-hidden',String(!on));if(on){render();vibrate();}}
+    function openCart(){open(false);if(cartSheet){cartSheet.classList.add('open','active');document.body.style.overflow='hidden';}else cartBtn?.click();}
+    function flashAdded(){ui.classList.add('is-added');status.textContent='BASE / ADDED';content.innerHTML='<div class="base-island-added"><span class="base-island-check">✓</span><div><strong>Добавлено в корзину</strong><span>'+ (productTitle()||'Вещь') +' · '+(document.getElementById('product-price')?.textContent||'')+'</span></div><button type="button" class="base-island-mini-action" data-island-action="cart">Корзина</button></div>';open(true);setTimeout(()=>{ui.classList.remove('is-added');open(false)},1800);}
+    main.addEventListener('click',()=>open(!ui.classList.contains('is-expanded'))); close.addEventListener('click',()=>open(false));
+    ui.addEventListener('click',e=>{const action=e.target.closest('[data-island-action]')?.dataset.islandAction;if(action==='cart'){openCart();return}if(action==='theme'){themeBtn?.click();render();return}if(action==='close'){open(false);return}if(e.target.closest('[data-focus="product"]')){open(false);document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'});}});
+    document.addEventListener('click',e=>{if(ui.classList.contains('is-expanded')&&!ui.contains(e.target))open(false);});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false);});
+    const add=document.getElementById('product-add');if(add)add.addEventListener('click',()=>{if(!add.classList.contains('disabled'))setTimeout(flashAdded,50);});
+    window.addEventListener('storage',render);window.addEventListener('hashchange',render);window.addEventListener('base:cart-changed',render);if(cartBtn)cartBtn.addEventListener('click',()=>setTimeout(render,50));
+    render();
   });
 })();
