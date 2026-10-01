@@ -27,6 +27,10 @@
                 <a href="#catalog" data-section="catalog">Каталог</a>
                 <a href="#how" data-section="how">Заказ</a>
             </nav>
+            <button class="cart-btn" id="cart-btn" type="button" aria-label="Корзина" title="Корзина">
+                <svg viewBox="0 0 24 24" class="cart-icon" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 6 5 3H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="20" r="1.2" fill="currentColor"/><circle cx="18" cy="20" r="1.2" fill="currentColor"/></svg>
+                <span class="cart-count" id="cart-count" hidden>0</span>
+            </button>
             <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Переключить тему" title="Переключить тему">
                 <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
                 <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.7 8.7 0 1 0 12 12Z"></path></svg>
@@ -78,8 +82,8 @@
                     </div>
                     <div class="how-card">
                         <div class="how-num">02</div>
-                        <h3>Напиши в Telegram</h3>
-                        <p>Нажми «Заказать» — откроется чат. Укажи ФИО, телефон и адрес доставки.</p>
+                        <h3>Собери заказ</h3>
+                        <p>Добавь вещи в корзину, затем оформи в Telegram. Укажи ФИО, телефон и адрес.</p>
                     </div>
                     <div class="how-card">
                         <div class="how-num">03</div>
@@ -104,8 +108,8 @@
                 </div>
 
                 <div class="how-cta">
-                    <a href="https://t.me/basewear_shop" class="btn-glass" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
-                    <span class="how-note">@basewear_shop · Под заказ · 7–14 дней</span>
+                    <a href="https://t.me/nthngv" class="btn-glass" target="_blank" rel="noopener noreferrer">Написать в Telegram</a>
+                    <span class="how-note">@nthngv · Под заказ · 7–14 дней</span>
                 </div>
             </div>
         </section>
@@ -118,7 +122,7 @@
             <div class="footer-links">
                 <a href="#catalog">Каталог</a>
                 <a href="#how">Как заказать</a>
-                <a href="https://t.me/basewear_shop" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer">Telegram</a>
             </div>
         </div>
     </footer>
@@ -173,5 +177,20 @@
     </div>
 
     <script src="script.js"></script>
+
+    <!-- Cart sheet -->
+    <div class="sheet-overlay" id="cart-sheet-overlay">
+        <div class="product-sheet cart-sheet">
+            <button class="sheet-close" id="cart-close" type="button" aria-label="Закрыть">×</button>
+            <div class="sheet-body">
+                <h2 class="cart-title">Корзина</h2>
+                <p class="cart-empty" id="cart-empty">Пока пусто. Добавь вещи из каталога.</p>
+                <div class="cart-items" id="cart-items"></div>
+                <button class="btn-order disabled" id="cart-order" type="button">Оформить в Telegram</button>
+                <p class="cart-note">Заказ уйдёт в личные сообщения @nthngv</p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
