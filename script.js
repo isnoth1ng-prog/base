@@ -142,6 +142,7 @@ function renderCatalog(filter) {
             <div class="product-img-box">
                 <div class="img-skeleton"></div>
                 <img src="${p.image}" alt="${p.title}" loading="lazy">
+                <span class="card-badge">Под заказ</span>
             </div>
             <div class="product-meta">
                 <div class="product-name">${p.title}</div>
@@ -276,7 +277,20 @@ overlay.addEventListener('click', (e) => {
 btnOrder.addEventListener('click', () => {
     if (btnOrder.classList.contains('disabled')) return;
     haptic();
-    const message = `Здравствуйте! Хочу заказать:%0A%0AТовар: ${currentProduct.title}%0AЦвет: ${selectedColor}%0AРазмер: ${selectedSize}%0AЦена: ${currentProduct.price.toLocaleString('ru-RU')} ₽`;
+    const message = [
+        'Здравствуйте. Хочу оформить заказ.',
+        '',
+        `Товар: ${currentProduct.title}`,
+        `Цвет: ${selectedColor}`,
+        `Размер: ${selectedSize}`,
+        `Цена: ${currentProduct.price.toLocaleString('ru-RU')} ₽`,
+        '',
+        'ФИО:',
+        'Телефон:',
+        'Город / ПВЗ или адрес:',
+        '',
+        'Готов подтвердить заказ.'
+    ].join('%0A');
     window.open(`https://t.me/${TG_USERNAME}?text=${message}`, '_blank');
 });
 
