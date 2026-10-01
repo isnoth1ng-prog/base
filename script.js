@@ -243,3 +243,25 @@ btnOrder.addEventListener('click', () => {
 
 // Init
 document.addEventListener('DOMContentLoaded', renderCatalog);
+
+
+/* Theme */
+const themeToggle = document.getElementById('theme-toggle');
+
+function setTheme(theme) {
+    document.documentElement.dataset.theme = theme;
+    try { localStorage.setItem('base-theme', theme); } catch (e) {}
+    if (themeToggle) {
+        const isLight = theme === 'light';
+        themeToggle.setAttribute('aria-label', isLight ? 'Включить тёмную тему' : 'Включить светлую тему');
+        themeToggle.setAttribute('title', isLight ? 'Тёмная тема' : 'Светлая тема');
+    }
+}
+
+if (themeToggle) {
+    setTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+    themeToggle.addEventListener('click', () => {
+        const nextTheme = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
+        setTheme(nextTheme);
+    });
+}
