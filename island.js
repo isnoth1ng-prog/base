@@ -1,33 +1,189 @@
-/* BASE Dynamic Island — compact by default, contextual when opened */
+/* BASE Dynamic Island — contextual system UI */
 (function(){
   const ready=fn=>document.readyState==='loading'?document.addEventListener('DOMContentLoaded',fn):fn();
   ready(()=>{
     const header=document.getElementById('island'), inner=header?.querySelector('.header-inner');
     if(!header||!inner)return;
-    const cartBtn=document.getElementById('cart-btn'), themeBtn=document.getElementById('theme-toggle'), cartSheet=document.getElementById('cart-sheet-overlay');
-    const ui=document.createElement('div'); ui.className='base-island-ui';
-    ui.innerHTML='<button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть меню BASE"><span class="base-island-mark">BASE.</span><span class="base-island-context">CATALOG</span><span class="base-island-cart-mini" id="base-island-mini-cart"></span></button><div class="base-island-expanded" aria-hidden="true"><div class="base-island-top"><div class="base-island-status"><span class="base-island-dot"></span><span id="base-island-status">BASE / READY</span></div><button class="base-island-close" type="button" aria-label="Закрыть">×</button></div><div class="base-island-content" id="base-island-content"></div><div class="base-island-actions"><a href="index.html#catalog" data-island-action="close">Каталог</a><button type="button" data-island-action="cart">Корзина <span id="base-island-count"></span></button><a href="index.html#how" data-island-action="close">Как заказать</a><a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" data-island-action="close">Telegram</a><button type="button" data-island-action="theme">Тема</button></div></div>';
+
+    const cartBtn=document.getElementById('cart-btn');
+    const themeBtn=document.getElementById('theme-toggle');
+    const cartSheet=document.getElementById('cart-sheet-overlay');
+
+    const ui=document.createElement('div');
+    ui.className='base-island-ui';
+    ui.innerHTML=`
+      <button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть меню BASE">
+        <span class="base-island-mark">BASE.</span>
+        <span class="base-island-context">CATALOG</span>
+        <span class="base-island-cart-mini" id="base-island-mini-cart"></span>
+      </button>
+      <div class="base-island-expanded" aria-hidden="true">
+        <div class="base-island-top">
+          <div class="base-island-status"><span class="base-island-dot"></span><span id="base-island-status">BASE / READY</span></div>
+          <button class="base-island-close" type="button" aria-label="Закрыть">×</button>
+        </div>
+        <div class="base-island-content" id="base-island-content"></div>
+        <div class="base-island-actions">
+          <a href="index.html#catalog" data-island-action="close">Каталог</a>
+          <a href="index.html#how" data-island-action="close">Как заказать</a>
+          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" data-island-action="close">Telegram</a>
+          <button type="button" data-island-action="theme">Тема</button>
+        </div>
+      </div>`;
     inner.appendChild(ui);
-    const main=ui.querySelector('.base-island-main'), expanded=ui.querySelector('.base-island-expanded'), close=ui.querySelector('.base-island-close'), content=ui.querySelector('#base-island-content'), context=ui.querySelector('.base-island-context'), status=ui.querySelector('#base-island-status'), countEl=ui.querySelector('#base-island-count'), miniCart=ui.querySelector('#base-island-mini-cart');
+
+    const main=ui.querySelector('.base-island-main');
+    const expanded=ui.querySelector('.base-island-expanded');
+    const close=ui.querySelector('.base-island-close');
+    const content=ui.querySelector('#base-island-content');
+    const context=ui.querySelector('.base-island-context');
+    const status=ui.querySelector('#base-island-status');
+    const miniCart=ui.querySelector('#base-island-mini-cart');
+
     const vibrate=()=>{try{navigator.vibrate?.(7)}catch(e){}};
     const getCart=()=>{try{return JSON.parse(localStorage.getItem('base_cart')||'[]')||[]}catch(e){return[]}};
-    const info=()=>{const cart=getCart();return{cart,count:cart.reduce((n,x)=>n+Number(x.qty||0),0),total:cart.reduce((n,x)=>n+(Number(x.price)||0)*Number(x.qty||0),0)}};
+    const info=()=>{
+      const cart=getCart();
+      return {
+        cart,
+        count:cart.reduce((n,x)=>n+Number(x.qty||0),0),
+        total:cart.reduce((n,x)=>n+(Number(x.price)||0)*Number(x.qty||0),0)
+      };
+    };
     const money=n=>Number(n).toLocaleString('ru-RU')+' ₽';
     const productTitle=()=>document.getElementById('product-title')?.textContent?.trim()||'';
-    function render(){ const i=info(),p=productTitle(); miniCart.textContent=i.count>0?i.count:''; miniCart.classList.toggle('visible',i.count>0); countEl.textContent=i.count?'· '+i.count:''; context.textContent=p?'PRODUCT':'CATALOG';
-      if(p){status.textContent='BASE / PRODUCT';content.innerHTML='<div class="base-island-product"><div class="base-island-product-copy"><span class="base-island-eyebrow">Сейчас открыто</span><strong>'+p+'</strong><span>'+(document.getElementById('product-price')?.textContent||'')+' · 7–14 дней</span></div><button type="button" class="base-island-mini-action" data-focus="product">Товар</button></div>';}
-      else if(i.count){status.textContent='BASE / CART';content.innerHTML='<div class="base-island-cart"><div><span class="base-island-eyebrow">Корзина</span><strong>'+i.count+' '+(i.count===1?'вещь':'вещей')+' · '+money(i.total)+'</strong></div><button type="button" class="base-island-mini-action" data-island-action="cart">Открыть</button></div>';}
-      else{status.textContent='BASE / READY';content.innerHTML='<div class="base-island-welcome"><strong>BASE / ФОРМА БЕЗ ЛИШНЕГО</strong><span>Каталог · под заказ · 7–14 дней</span></div>';}
+    const productImage=()=>document.getElementById('product-image')?.getAttribute('src')||'';
+
+    function render(){
+      const i=info(), p=productTitle();
+      miniCart.textContent=i.count>0?i.count:'';
+      miniCart.classList.toggle('visible',i.count>0);
+
+      if(p){
+        context.textContent='PRODUCT';
+        status.textContent='BASE / PRODUCT';
+        content.innerHTML=`
+          <div class="base-island-product">
+            <div class="base-island-product-thumb">${productImage()?'<img src="'+productImage()+'" alt="">':''}</div>
+            <div class="base-island-product-copy">
+              <span class="base-island-eyebrow">Сейчас открыто</span>
+              <strong>${p}</strong>
+              <span>${document.getElementById('product-price')?.textContent||''} · 7–14 дней</span>
+            </div>
+            <button type="button" class="base-island-mini-action" data-focus="product">Товар</button>
+          </div>`;
+      } else if(i.count){
+        context.textContent='CART';
+        status.textContent='BASE / CART';
+        content.innerHTML=`
+          <div class="base-island-cart">
+            <div class="base-island-cart-copy">
+              <span class="base-island-eyebrow">Корзина</span>
+              <strong>${i.count} ${i.count===1?'вещь':'вещей'} · ${money(i.total)}</strong>
+            </div>
+            <button type="button" class="base-island-mini-action" data-island-action="cart">Открыть</button>
+          </div>`;
+      } else {
+        context.textContent='CATALOG';
+        status.textContent='BASE / READY';
+        content.innerHTML=`
+          <div class="base-island-welcome">
+            <span class="base-island-welcome-mark">BASE.</span>
+            <div>
+              <strong>ФОРМА БЕЗ ЛИШНЕГО</strong>
+              <span>Каталог · под заказ · 7–14 дней</span>
+            </div>
+          </div>`;
+      }
     }
-    let closeTimer=null; function open(on=true){clearTimeout(closeTimer);ui.classList.toggle('is-expanded',on);main.setAttribute('aria-expanded',String(on));expanded.setAttribute('aria-hidden',String(!on));if(on){render();vibrate();closeTimer=setTimeout(()=>open(false),3800);}}
-    function openCart(){open(false);if(cartBtn){cartBtn.click();return}if(cartSheet){cartSheet.classList.add('open');cartSheet.classList.remove('active');document.body.style.overflow='hidden';}}
-    function flashAdded(){ui.classList.add('is-added');status.textContent='BASE / ADDED';content.innerHTML='<div class="base-island-added"><span class="base-island-check">✓</span><div><strong>Добавлено в корзину</strong><span>'+ (productTitle()||'Вещь') +' · '+(document.getElementById('product-price')?.textContent||'')+'</span></div><button type="button" class="base-island-mini-action" data-island-action="cart">Корзина</button></div>';open(true);setTimeout(()=>{ui.classList.remove('is-added');open(false)},1800);}
-    main.addEventListener('click',()=>{main.classList.remove('is-pressed');void main.offsetWidth;main.classList.add('is-pressed');open(!ui.classList.contains('is-expanded'));}); close.addEventListener('click',()=>open(false));
-    ui.addEventListener('click',e=>{const action=e.target.closest('[data-island-action]')?.dataset.islandAction;if(action==='cart'){openCart();return}if(action==='theme'){themeBtn?.click();render();return}if(action==='close'){open(false);return}if(e.target.closest('[data-focus="product"]')){open(false);document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'});}});
-    document.addEventListener('click',e=>{if(ui.classList.contains('is-expanded')&&!ui.contains(e.target))open(false);});
-    document.addEventListener('keydown',e=>{if(e.key==='Escape')open(false);});
-    const add=document.getElementById('product-add');if(add)add.addEventListener('click',()=>{if(!add.classList.contains('disabled'))setTimeout(flashAdded,50);});
-    window.addEventListener('storage',render);window.addEventListener('hashchange',render);window.addEventListener('base:cart-changed',render);if(cartBtn)cartBtn.addEventListener('click',()=>setTimeout(render,50));
+
+    let closeTimer=null;
+    function setOpen(on=true,auto=true){
+      clearTimeout(closeTimer);
+      ui.classList.toggle('is-expanded',on);
+      main.setAttribute('aria-expanded',String(on));
+      expanded.setAttribute('aria-hidden',String(!on));
+      if(on){
+        render();
+        vibrate();
+        if(auto)closeTimer=setTimeout(()=>setOpen(false,false),5200);
+      }
+    }
+
+    function openCart(){
+      setOpen(false,false);
+      window.dispatchEvent(new Event('base:open-cart'));
+      if(cartBtn){
+        setTimeout(()=>{
+          if(cartSheet && !cartSheet.classList.contains('active') && !cartSheet.classList.contains('open')){
+            cartBtn.click();
+          }
+        },20);
+      }
+    }
+
+    function flashAdded(){
+      ui.classList.add('is-added');
+      context.textContent='ADDED';
+      status.textContent='BASE / ADDED';
+      content.innerHTML=`
+        <div class="base-island-added">
+          <span class="base-island-check">✓</span>
+          <div>
+            <strong>Добавлено в корзину</strong>
+            <span>${productTitle()||'Вещь'} · ${document.getElementById('product-price')?.textContent||''}</span>
+          </div>
+          <button type="button" class="base-island-mini-action" data-island-action="cart">Корзина</button>
+        </div>`;
+      setOpen(true,false);
+      setTimeout(()=>{ui.classList.remove('is-added');setOpen(false,false);render()},1800);
+    }
+
+    main.addEventListener('click',()=>{
+      main.classList.remove('is-pressed');
+      void main.offsetWidth;
+      main.classList.add('is-pressed');
+      setOpen(!ui.classList.contains('is-expanded'));
+    });
+    close.addEventListener('click',()=>setOpen(false,false));
+
+    ui.addEventListener('click',e=>{
+      const action=e.target.closest('[data-island-action]')?.dataset.islandAction;
+      if(action==='cart'){openCart();return}
+      if(action==='theme'){themeBtn?.click();render();return}
+      if(action==='close'){setOpen(false,false);return}
+      if(e.target.closest('[data-focus="product"]')){
+        setOpen(false,false);
+        document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'});
+      }
+    });
+
+    document.addEventListener('click',e=>{
+      if(ui.classList.contains('is-expanded')&&!ui.contains(e.target))setOpen(false,false);
+    });
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false,false)});
+
+    const add=document.getElementById('product-add');
+    if(add)add.addEventListener('click',()=>{
+      if(!add.classList.contains('disabled'))setTimeout(flashAdded,60);
+    });
+
+    window.addEventListener('storage',render);
+    window.addEventListener('hashchange',render);
+    window.addEventListener('base:cart-changed',render);
+    window.addEventListener('base:open-cart',()=>setTimeout(render,80));
+    if(cartBtn)cartBtn.addEventListener('click',()=>setTimeout(render,80));
+
+    // Subtle scroll state only — no transforms, no layout movement.
+    let scrollTimer=null;
+    window.addEventListener('scroll',()=>{
+      if(scrollTimer)return;
+      scrollTimer=setTimeout(()=>{
+        ui.classList.toggle('is-scrolled',window.scrollY>24);
+        scrollTimer=null;
+      },80);
+    },{passive:true});
+
     render();
   });
 })();
