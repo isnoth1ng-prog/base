@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BASE. | Premium Minimal Fashion</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="glass-header">
+        <div class="header-inner">
+            <a href="#" class="brand-logo">BASE.</a>
+            <nav class="nav-links">
+                <a href="#catalog">Каталог</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">BASE.</h1>
+                <p class="hero-subtitle">Одежда на каждый день.<br>Ничего лишнего.</p>
+                <a href="#catalog" class="btn-glass">Смотреть коллекцию</a>
+            </div>
+            <div class="hero-image">
+                <!-- We use the first image as a hero banner background -->
+                <img src="images_cards/card_jeans-blue.jpg" alt="Hero Fashion">
+            </div>
+        </section>
+
+        <section id="catalog" class="catalog-section">
+            <div class="container">
+                <div class="product-grid" id="products-grid">
+                    <!-- Products rendered via JS -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="minimal-footer">
+        <div class="container footer-content">
+            <div class="footer-brand">BASE.</div>
+            <div class="footer-links">
+                <a href="#catalog">Каталог</a>
+                <a href="https://t.me/nthngv" target="_blank">Telegram</a>
+                <a href="#">Доставка</a>
+                <a href="#">Возврат</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Liquid Glass Bottom Sheet / Modal -->
+    <div id="product-sheet-overlay" class="sheet-overlay">
+        <div id="product-sheet" class="bottom-sheet">
+            <button class="sheet-close" id="sheet-close" aria-label="Закрыть">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+            
+            <div class="sheet-content">
+                <div class="sheet-image-container">
+                    <img id="sheet-img" src="" alt="Product">
+                </div>
+                
+                <div class="sheet-info-container">
+                    <div class="sheet-header">
+                        <h2 id="sheet-title" class="sheet-title">Product Name</h2>
+                        <p id="sheet-subtitle" class="sheet-subtitle">Subtitle</p>
+                        <p id="sheet-price" class="sheet-price">0 ₽</p>
+                    </div>
+
+                    <div class="sheet-options">
+                        <div class="option-section" id="color-section">
+                            <label class="option-label">Цвет</label>
+                            <div class="chips-group" id="sheet-colors"></div>
+                        </div>
+
+                        <div class="option-section" id="size-section">
+                            <label class="option-label">Размер</label>
+                            <div class="chips-group" id="sheet-sizes"></div>
+                        </div>
+                    </div>
+
+                    <div class="sheet-details">
+                        <div class="detail-row" id="detail-material">
+                            <span class="detail-label">Материал</span>
+                            <span class="detail-value" id="val-material"></span>
+                        </div>
+                        <div class="detail-row" id="detail-fit">
+                            <span class="detail-label">Посадка</span>
+                            <span class="detail-value" id="val-fit"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sticky CTA -->
+            <div class="sheet-cta-container glass-panel">
+                <button id="btn-order" class="btn-primary disabled">
+                    <span class="btn-text">Выберите размер</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
