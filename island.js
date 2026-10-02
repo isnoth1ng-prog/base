@@ -159,6 +159,7 @@
     window.addEventListener('hashchange',render);
     window.addEventListener('base:cart-changed',render);
     window.addEventListener('base:open-cart',()=>setTimeout(render,80));
+    window.addEventListener('base:close-cart',()=>setOpen(false,false));
     if(cartBtn)cartBtn.addEventListener('click',()=>setTimeout(render,80));
 
     // Subtle scroll state only — no transforms, no layout movement.
