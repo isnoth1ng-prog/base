@@ -1806,3 +1806,28 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .hero-logo{width:min(350px,82vw)!important;max-height:96px!important}
   .footer-brand img{width:62px!important;max-height:38px!important}
 }
+
+
+/* ===== LOGO CONTRAST + TRUE VISUAL SIZE ===== */
+/* The PNG has transparent padding, so sizing the <img> box alone makes the mark look too small. */
+.brand-logo img{
+  transform:scale(1.75)!important;
+  transform-origin:left center!important;
+  filter:invert(1)!important;
+}
+.hero-logo,
+.footer-brand img{
+  transform:scale(1.65)!important;
+  transform-origin:left center!important;
+  filter:invert(1)!important;
+}
+/* Light theme: hero/footer sit on light surfaces, so keep the original dark mark there. */
+html[data-theme="light"] .hero-logo,
+html[data-theme="light"] .footer-brand img{
+  filter:none!important;
+}
+@media(max-width:768px){
+  .brand-logo img{transform:scale(1.55)!important}
+  .hero-logo{transform:scale(1.45)!important}
+  .footer-brand img{transform:scale(1.45)!important}
+}
