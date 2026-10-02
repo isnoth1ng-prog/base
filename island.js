@@ -12,7 +12,7 @@
     ui.innerHTML=`
       <button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть меню BASE">
         <span class="base-island-mark" aria-hidden="true"><img src="assets/logo/logo.png" alt=""></span>
-        <span class="base-island-context">CATALOG</span>
+        <span class="base-island-context" aria-hidden="true"></span>
       </button>
       <div class="base-island-expanded" aria-hidden="true">
         <div class="base-island-content" id="base-island-content"></div>
@@ -30,7 +30,7 @@
     const context=ui.querySelector('.base-island-context');
     const vibrate=()=>{try{navigator.vibrate?.(7)}catch(e){}};
     let statusTimer=null;
-    let baseLabel='CATALOG';
+    let baseLabel='';
     let statusLabel='';
     function showStatus(label,duration=1200){
       clearTimeout(statusTimer);
@@ -41,7 +41,7 @@
     }
     window.BASEIsland={
       status:(label,duration)=>{showStatus(label,duration);vibrate()},
-      setBaseLabel:(label)=>{baseLabel=label||'CATALOG';if(!statusLabel)context.textContent=baseLabel}
+      setBaseLabel:(label)=>{baseLabel=label||'';if(!statusLabel)context.textContent=baseLabel}
     };
     function render(){
       if(!statusLabel)context.textContent=baseLabel;
@@ -84,27 +84,6 @@
     });
     document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false,false)});
 
-    let scrollTimer=null;
-    window.addEventListener('scroll',()=>{
-      if(scrollTimer)return;
-      scrollTimer=setTimeout(()=>{
-        ui.classList.toggle('is-scrolled',window.scrollY>24);
-        if(!statusLabel){
-          const y=window.scrollY+window.innerHeight*.22;
-          const how=document.getElementById('how');
-          const catalog=document.getElementById('catalog');
-          const label=how&&y>=how.offsetTop?'HOW':catalog&&y>=catalog.offsetTop?'CATALOG':'BASE';
-          if(label!==baseLabel){
-            baseLabel=label;
-            context.classList.remove('is-context-shifting');
-            void context.offsetWidth;
-            context.classList.add('is-context-shifting');
-            context.textContent=label;
-          }
-        }
-        scrollTimer=null;
-      },80);
-    },{passive:true});
     render();
   });
 })();
