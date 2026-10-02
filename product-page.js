@@ -1,11 +1,11 @@
 const PRODUCTS=[
-{id:'1',title:'J-01',subtitle:'Белый · Wide fit',price:2990,image:'images_cards/card_pants-white.jpg',material:'100% Хлопок (Деним)',fit:'Wide / Relaxed',colors:['White'],sizes:['S','M','L','XL']},
-{id:'2',title:'C-01',subtitle:'Бежевый · Relaxed fit',price:2990,image:'images_cards/card_pants-beige.jpg',material:'Хлопок / Полиэстер',fit:'Relaxed',colors:['Beige'],sizes:['S','M','L','XL']},
+{id:'1',title:'C-01',subtitle:'Белый · Wide fit',price:2990,image:'images_cards/card_pants-white.jpg',material:'100% Хлопок (Деним)',fit:'Wide / Relaxed',colors:['White'],sizes:['S','M','L','XL']},
+{id:'2',title:'P-01',subtitle:'Бежевый · Relaxed fit',price:2990,image:'images_cards/card_pants-beige.jpg',material:'Хлопок / Полиэстер',fit:'Relaxed',colors:['Beige'],sizes:['S','M','L','XL']},
 {id:'3',title:'Z-01',subtitle:'Черный · Regular fit',price:2990,image:'images_cards/card_hoodie-black.jpg',material:'80% Хлопок, 20% Полиэстер',fit:'Regular',colors:['Black'],sizes:['M','L','XL','XXL']},
 {id:'4',title:'S-01',subtitle:'Серый меланж · Oversize',price:2190,image:'images_cards/card_sweatpants-grey.jpg',material:'Хлопок (Футер 3-х нитка)',fit:'Oversize',colors:['Grey'],sizes:['S','M','L']},
 {id:'5',title:'Z-02',subtitle:'Черно-бордовый · Regular',price:2990,image:'images_cards/card_hoodie-redblack.jpg',material:'Хлопок, Флис',fit:'Regular',colors:['Black/Red'],sizes:['M','L','XL']},
 {id:'6',title:'C-02',subtitle:'Голубой · Wide fit',price:2990,image:'images_cards/card_jeans-blue.jpg',material:'100% Хлопок (Деним)',fit:'Wide',colors:['Vintage Blue'],sizes:['S','M','L','XL']},
-{id:'7',title:'J-01',subtitle:'Черный · Wide fit',price:2990,image:'images_cards/card_jeans-black.jpg',material:'100% Хлопок (Деним)',fit:'Wide',colors:['Black'],sizes:['S','M','L','XL']},
+{id:'7',title:'C-03',subtitle:'Черный · Wide fit',price:2990,image:'images_cards/card_jeans-black.jpg',material:'100% Хлопок (Деним)',fit:'Wide',colors:['Black'],sizes:['S','M','L','XL']},
 {id:'8',title:'H-02',subtitle:'Черный · Oversize',price:2990,image:'images_cards/card_hoodie-lsd.jpg',material:'80% Хлопок, 20% Полиэстер',fit:'Oversize',colors:['Black'],sizes:['M','L','XL']},
 {id:'9',title:'S-02',subtitle:'Черный · Wide fit',price:2190,image:'images_cards/card_sweatpants-black.jpg',material:'Хлопок (Футер 3-х нитка)',fit:'Wide / Oversize',colors:['Black'],sizes:['S','M','L','XL']}
 ];
