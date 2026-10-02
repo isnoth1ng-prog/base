@@ -49,14 +49,7 @@
           </div>`;
       }else{
         context.textContent='CATALOG';
-        content.innerHTML=`
-          <div class="base-island-welcome">
-            <span class="base-island-welcome-mark">BASE.</span>
-            <div>
-              <strong>Каталог</strong>
-              <span>Под заказ · 7–14 дней</span>
-            </div>
-          </div>`;
+        content.innerHTML='';
       }
     }
 
