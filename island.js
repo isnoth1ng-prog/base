@@ -56,7 +56,6 @@
           <div class="base-island-product">
             <div class="base-island-product-thumb">${productImage()?'<img src="'+productImage()+'" alt="">':''}</div>
             <div class="base-island-product-copy">
-              <span class="base-island-eyebrow">Сейчас открыто</span>
               <strong>${p}</strong>
               <span>${document.getElementById('product-price')?.textContent||''} · 7–14 дней</span>
             </div>
