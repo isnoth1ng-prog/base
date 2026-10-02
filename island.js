@@ -44,28 +44,9 @@
       status:(label,duration)=>{showStatus(label,duration);vibrate()},
       setBaseLabel:(label)=>{baseLabel=label||'CATALOG';if(!statusLabel)context.textContent=baseLabel}
     };
-    const productTitle=()=>document.getElementById('product-title')?.textContent?.trim()||'';
-    const productImage=()=>document.getElementById('product-image')?.getAttribute('src')||'';
-    const selectedValue=selector=>document.querySelector(selector+' .chip.active')?.textContent?.trim()||'';
-
     function render(){
-      const p=productTitle();
-      if(p){
-        baseLabel='PRODUCT';
-        if(!statusLabel)context.textContent='PRODUCT';
-        const price=document.getElementById('product-price')?.textContent||'';
-        const color=selectedValue('#product-colors');
-        const size=selectedValue('#product-sizes');
-        const meta=[color,size].filter(Boolean).join(' · ');
-        content.innerHTML='<div class="base-island-product">'+
-          '<div class="base-island-product-thumb">'+(productImage()?'<img src="'+productImage()+'" alt="">':'')+'</div>'+
-          '<div class="base-island-product-copy"><strong>'+p+'</strong><span>'+(meta||price)+'</span>'+(meta?'<em>'+price+'</em>':'')+'</div>'+
-          '<button type="button" class="base-island-mini-action" data-focus="product">Товар</button></div>';
-      }else{
-        baseLabel='CATALOG';
-        if(!statusLabel)context.textContent='CATALOG';
-        content.innerHTML='';
-      }
+      if(!statusLabel)context.textContent=baseLabel;
+      content.innerHTML='';
     }
 
     window.BASEIsland.refresh=render;
@@ -81,6 +62,10 @@
         if(auto)closeTimer=setTimeout(()=>setOpen(false,false),5200);
       }
     }
+
+    main.addEventListener('pointerdown',()=>ui.classList.add('is-touching'));
+    main.addEventListener('pointerup',()=>ui.classList.remove('is-touching'));
+    main.addEventListener('pointercancel',()=>ui.classList.remove('is-touching'));
 
     main.addEventListener('click',()=>{
       main.classList.remove('is-pressed');
@@ -109,13 +94,18 @@
       if(scrollTimer)return;
       scrollTimer=setTimeout(()=>{
         ui.classList.toggle('is-scrolled',window.scrollY>24);
-        if(!productTitle()&&!statusLabel){
-          const y=window.scrollY+120;
+        if(!statusLabel){
+          const y=window.scrollY+window.innerHeight*.22;
           const how=document.getElementById('how');
           const catalog=document.getElementById('catalog');
           const label=how&&y>=how.offsetTop?'HOW':catalog&&y>=catalog.offsetTop?'CATALOG':'BASE';
-          baseLabel=label;
-          context.textContent=label;
+          if(label!==baseLabel){
+            baseLabel=label;
+            context.classList.remove('is-context-shifting');
+            void context.offsetWidth;
+            context.classList.add('is-context-shifting');
+            context.textContent=label;
+          }
         }
         scrollTimer=null;
       },80);
