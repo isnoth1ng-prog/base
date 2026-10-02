@@ -213,10 +213,17 @@ if (themeToggle) {
         if (cart.length === 0) {
             cartItems.innerHTML = '';
             if (cartEmpty) cartEmpty.hidden = false;
-            if (cartOrder) cartOrder.classList.add('disabled');
+            if (cartOrder) {
+                cartOrder.classList.add('disabled');
+                cartOrder.setAttribute('aria-disabled', 'true');
+            }
             return;
         }
         if (cartEmpty) cartEmpty.hidden = true;
+        if (cartOrder) {
+            cartOrder.classList.remove('disabled');
+            cartOrder.setAttribute('aria-disabled', 'false');
+        }
         const invalidCart = cart.some(item => !item.size || !item.color);
         if (cartOrder) cartOrder.classList.toggle('disabled', invalidCart);
         cartItems.innerHTML = cart.map((item, idx) => `
