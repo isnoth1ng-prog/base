@@ -76,6 +76,27 @@ function add(){
   setTimeout(()=>{b.textContent='В корзину';b.classList.remove('added')},1000);
 }
 
+function openCheckout(items){
+  if(!Array.isArray(items)||!items.length)return;
+  const overlay=$('checkout-overlay'),form=$('checkout-form');
+  if(!overlay||!form)return;
+  form.dataset.items=JSON.stringify(items);
+  const error=$('checkout-error');
+  if(error){error.hidden=true;error.textContent=''}
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>$('checkout-name')?.focus(),140);
+}
+
+function closeCheckout(){
+  const overlay=$('checkout-overlay');
+  if(!overlay)return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+
 function buyNow(){
   if(!product)return;
   const target=!color ? $('product-colors') : (!size ? $('product-sizes') : null);
@@ -124,7 +145,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('product-fit').textContent=product.fit;
 
   chips($('product-colors'),product.colors,v=>{color=v;syncBuyState()},true);
-  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()},true);
+  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()});
 
   load();renderCart();
 
@@ -148,19 +169,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   $('cart-order').addEventListener('click',e=>{e.preventDefault();if(!cart.length||cart.some(x=>!x.size||!x.color))return;openCheckout(cart)});
-  function openCheckout(items){
-    if(!Array.isArray(items)||!items.length)return;
-    const overlay=$('checkout-overlay'),form=$('checkout-form');
-    if(!overlay||!form)return;
-    form.dataset.items=JSON.stringify(items);
-    const error=$('checkout-error');
-    if(error){error.hidden=true;error.textContent=''}
-    overlay.classList.add('open');
-    overlay.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    setTimeout(()=>$('checkout-name')?.focus(),140);
-  }
-  function closeCheckout(){const overlay=$('checkout-overlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
   $('checkout-close')?.addEventListener('click',closeCheckout);$('checkout-overlay')?.addEventListener('click',e=>{if(e.target.id==='checkout-overlay')closeCheckout()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout()});
   $('checkout-form')?.addEventListener('submit',e=>{
     e.preventDefault();
