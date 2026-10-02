@@ -62,7 +62,10 @@
       }
     }
 
-    main.addEventListener('pointerdown',()=>ui.classList.add('is-touching'));
+    main.addEventListener('pointerdown',()=>{
+      ui.classList.add('is-touching');
+      try{navigator.vibrate?.(7)}catch(e){}
+    });
     main.addEventListener('pointerup',()=>ui.classList.remove('is-touching'));
     main.addEventListener('pointercancel',()=>ui.classList.remove('is-touching'));
 
