@@ -103,14 +103,12 @@
 
     function openCart(){
       setOpen(false,false);
+      if(!cartSheet)return;
+      // Open the real cart directly as a fallback. This keeps the island independent
+      // from the header/cart button event chain.
+      try{cartSheet.classList.add('open','active')}catch(e){}
+      document.body.style.overflow='hidden';
       window.dispatchEvent(new Event('base:open-cart'));
-      if(cartBtn){
-        setTimeout(()=>{
-          if(cartSheet && !cartSheet.classList.contains('active') && !cartSheet.classList.contains('open')){
-            cartBtn.click();
-          }
-        },20);
-      }
     }
 
     function flashAdded(){
