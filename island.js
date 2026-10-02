@@ -46,27 +46,29 @@
     };
     const productTitle=()=>document.getElementById('product-title')?.textContent?.trim()||'';
     const productImage=()=>document.getElementById('product-image')?.getAttribute('src')||'';
+    const selectedValue=selector=>document.querySelector(selector+' .chip.active')?.textContent?.trim()||'';
 
     function render(){
       const p=productTitle();
       if(p){
         baseLabel='PRODUCT';
         if(!statusLabel)context.textContent='PRODUCT';
-        content.innerHTML=`
-          <div class="base-island-product">
-            <div class="base-island-product-thumb">${productImage()?'<img src="'+productImage()+'" alt="">':''}</div>
-            <div class="base-island-product-copy">
-              <strong>${p}</strong>
-              <span>${document.getElementById('product-price')?.textContent||''} · 7–14 дней</span>
-            </div>
-            <button type="button" class="base-island-mini-action" data-focus="product">Товар</button>
-          </div>`;
+        const price=document.getElementById('product-price')?.textContent||'';
+        const color=selectedValue('#product-colors');
+        const size=selectedValue('#product-sizes');
+        const meta=[color,size].filter(Boolean).join(' · ');
+        content.innerHTML='<div class="base-island-product">'+
+          '<div class="base-island-product-thumb">'+(productImage()?'<img src="'+productImage()+'" alt="">':'')+'</div>'+
+          '<div class="base-island-product-copy"><strong>'+p+'</strong><span>'+(meta||price)+'</span>'+(meta?'<em>'+price+'</em>':'')+'</div>'+
+          '<button type="button" class="base-island-mini-action" data-focus="product">Товар</button></div>';
       }else{
         baseLabel='CATALOG';
         if(!statusLabel)context.textContent='CATALOG';
         content.innerHTML='';
       }
     }
+
+    window.BASEIsland.refresh=render;
 
     let closeTimer=null;
     function setOpen(on=true,auto=true){
@@ -107,6 +109,14 @@
       if(scrollTimer)return;
       scrollTimer=setTimeout(()=>{
         ui.classList.toggle('is-scrolled',window.scrollY>24);
+        if(!productTitle()&&!statusLabel){
+          const y=window.scrollY+120;
+          const how=document.getElementById('how');
+          const catalog=document.getElementById('catalog');
+          const label=how&&y>=how.offsetTop?'HOW':catalog&&y>=catalog.offsetTop?'CATALOG':'BASE';
+          baseLabel=label;
+          context.textContent=label;
+        }
         scrollTimer=null;
       },80);
     },{passive:true});
