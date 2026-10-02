@@ -11,7 +11,7 @@
     ui.className='base-island-ui';
     ui.innerHTML=`
       <button class="base-island-main" type="button" aria-expanded="false" aria-label="Открыть меню BASE">
-        <span class="base-island-mark">BASE.</span>
+        <span class="base-island-mark" aria-hidden="true"><img src="assets/logo/logo.png" alt=""></span>
         <span class="base-island-context">CATALOG</span>
       </button>
       <div class="base-island-expanded" aria-hidden="true">
