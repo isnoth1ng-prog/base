@@ -1,4 +1,5 @@
 const PRODUCTS=[
+{id:'10',title:'C-03',subtitle:'Серый · Wide fit',price:2990,image:'images_cards/IMG_1851.jpeg',category:'jeans',material:'60% Хлопок',fit:'Wide',colors:['Grey'],colorImages:{Grey:'images_cards/IMG_1851.jpeg'},sizes:['S','M','L','XL','XXL','XXXL']},
 {id:'1',title:'C-01',subtitle:'Черный · Wide fit',price:2990,image:'images_cards/IMG_1852.jpeg',material:'100% Хлопок (Деним)',fit:'Wide / Relaxed',colors:['Black','White'],colorImages:{Black:'images_cards/IMG_1852.jpeg',White:'images_cards/IMG_1853.jpeg'},sizes:['S','M','L','XL','2XL','3XL']},
 {id:'2',title:'P-01',subtitle:'Хаки · Relaxed fit',price:2990,image:'images_cards/card_pants-beige.jpg',material:'Хлопок / Полиэстер',fit:'Relaxed',colors:['Khaki'],sizes:['30','32','34','36','38','40']},
 {id:'3',title:'Z-01',subtitle:'Черный · Regular fit',price:2990,image:'images_cards/card_hoodie-black.jpg',material:'80% Хлопок, 20% Полиэстер',fit:'Regular',colors:['Black','Grey'],colorImages:{Black:'images_cards/card_hoodie-black.jpg',Grey:'images_cards/IMG_1859.jpeg'},sizes:['M','L','XL','XXL','XXXL']},
