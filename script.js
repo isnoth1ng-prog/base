@@ -1,7 +1,7 @@
 const products = [
     {
         id: '1',
-        title: 'BASE WIDE JEANS',
+        title: 'J-01',
         subtitle: 'Белый · Wide fit',
         price: 2990,
         image: 'images_cards/card_pants-white.jpg',
@@ -13,7 +13,7 @@ const products = [
     },
     {
         id: '2',
-        title: 'WIDE CARGO PANTS',
+        title: 'C-01',
         subtitle: 'Бежевый · Relaxed fit',
         price: 2990,
         image: 'images_cards/card_pants-beige.jpg',
@@ -25,7 +25,7 @@ const products = [
     },
     {
         id: '3',
-        title: 'ESSENTIAL ZIP HOODIE',
+        title: 'Z-01',
         subtitle: 'Черный · Regular fit',
         price: 2990,
         image: 'images_cards/card_hoodie-black.jpg',
@@ -37,7 +37,7 @@ const products = [
     },
     {
         id: '4',
-        title: 'OVERSIZE SWEATPANTS',
+        title: 'S-01',
         subtitle: 'Серый меланж · Oversize',
         price: 2190,
         image: 'images_cards/card_sweatpants-grey.jpg',
@@ -49,7 +49,7 @@ const products = [
     },
     {
         id: '5',
-        title: 'REVERSIBLE ZIP HOODIE',
+        title: 'Z-02',
         subtitle: 'Черно-бордовый · Regular',
         price: 2990,
         image: 'images_cards/card_hoodie-redblack.jpg',
@@ -61,7 +61,7 @@ const products = [
     },
     {
         id: '6',
-        title: 'VINTAGE WIDE JEANS',
+        title: 'J-02',
         subtitle: 'Голубой · Wide fit',
         price: 2990,
         image: 'images_cards/card_jeans-blue.jpg',
@@ -85,7 +85,7 @@ const products = [
     },
     {
         id: '8',
-        title: 'LSD GRAPHIC HOODIE',
+        title: 'H-02',
         subtitle: 'Черный · Oversize',
         price: 2990,
         image: 'images_cards/card_hoodie-lsd.jpg',
@@ -97,7 +97,7 @@ const products = [
     },
     {
         id: '9',
-        title: 'WIDE SWEATPANTS',
+        title: 'S-02',
         subtitle: 'Черный · Wide fit',
         price: 2190,
         image: 'images_cards/card_sweatpants-black.jpg',
