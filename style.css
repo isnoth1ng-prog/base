@@ -1631,3 +1631,11 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .base-island-ui.is-expanded .base-island-expanded{padding-bottom:6px!important}
 .base-island-ui.is-expanded .base-island-content{display:none!important;min-height:0!important;padding:0!important}
 @media(max-width:600px){.base-island-ui.is-expanded .base-island-actions{grid-template-columns:repeat(4,1fr)!important}.base-island-ui.is-expanded .base-island-actions a,.base-island-ui.is-expanded .base-island-actions button{min-height:29px!important}.base-island-ui.is-expanded .base-island-expanded{padding-bottom:5px!important}}
+
+
+/* ===== REFINED ISLAND ICONS ===== */
+.base-island-actions{grid-template-columns:repeat(3,1fr)!important;gap:5px!important}
+.base-island-actions a span,.base-island-actions button span{display:grid!important;place-items:center!important;font-size:0!important;width:100%;height:100%}
+.base-island-actions svg{width:16px!important;height:16px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.55!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.base-island-actions a,.base-island-actions button{min-height:31px!important;border-radius:10px!important}
+@media(max-width:600px){.base-island-actions{grid-template-columns:repeat(3,1fr)!important;gap:5px!important}.base-island-actions a,.base-island-actions button{min-height:30px!important}}
