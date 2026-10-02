@@ -1646,3 +1646,35 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .base-island-ui.is-expanded .base-island-actions{grid-template-columns:repeat(3,1fr)!important;gap:4px!important}
 .base-island-ui.is-expanded .base-island-expanded{padding-left:6px!important;padding-right:6px!important;padding-bottom:5px!important}
 @media(max-width:600px){.base-island-ui.is-expanded{width:min(184px,calc(100vw - 28px))!important}.base-island-ui.is-expanded .base-island-expanded{padding-left:5px!important;padding-right:5px!important}}
+
+
+/* ===== FINAL BRAND WORDMARK ===== */
+.hero-title{
+  margin-bottom:18px;
+  font-family: "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  font-weight:900;
+  letter-spacing:-0.085em;
+  line-height:.82;
+}
+.hero-wordmark{
+  display:inline-block;
+  font-size:clamp(54px,7vw,78px);
+  font-weight:900;
+  letter-spacing:-0.095em;
+  transform:scaleX(.92);
+  transform-origin:left center;
+}
+.hero-dot{
+  display:inline-block;
+  margin-left:.025em;
+  transform:translateY(-.01em);
+}
+.hero-title::after{
+  width:36px;
+  left:1px;
+  bottom:-10px;
+  height:2px;
+}
+@media(max-width:768px){
+  .hero-wordmark{font-size:clamp(46px,12vw,62px)}
+}
