@@ -17,10 +17,10 @@
       <div class="base-island-expanded" aria-hidden="true">
         <div class="base-island-content" id="base-island-content"></div>
         <div class="base-island-actions">
-          <a href="index.html#catalog" data-island-action="close">Каталог</a>
-          <a href="index.html#how" data-island-action="close">Как заказать</a>
-          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" data-island-action="close">Telegram</a>
-          <button type="button" data-island-action="theme">Тема</button>
+          <a href="index.html#catalog" aria-label="Каталог" title="Каталог" data-island-action="close"><span aria-hidden="true">▦</span></a>
+          <a href="index.html#how" aria-label="Как заказать" title="Как заказать" data-island-action="close"><span aria-hidden="true">?</span></a>
+          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram" data-island-action="close"><span aria-hidden="true">➤</span></a>
+          <button type="button" aria-label="Тема" title="Тема" data-island-action="theme"><span aria-hidden="true">◐</span></button>
         </div>
       </div>`;
     inner.appendChild(ui);
