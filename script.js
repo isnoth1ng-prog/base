@@ -354,7 +354,8 @@ if (themeToggle) {
             return;
         }
         if (cartEmpty) cartEmpty.hidden = true;
-        if (cartOrder) cartOrder.classList.remove('disabled');
+        const invalidCart = cart.some(item => !item.size || !item.color);
+        if (cartOrder) cartOrder.classList.toggle('disabled', invalidCart);
         cartItems.innerHTML = cart.map((item, idx) => `
             <div class="cart-row" data-idx="${idx}">
                 <img src="${item.image}" alt="">
