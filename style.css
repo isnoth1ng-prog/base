@@ -1975,3 +1975,11 @@ html[data-theme="light"] .footer-brand img{
   .product-card,
   .product-img-box img{transition:none!important}
 }
+
+
+/* ===== ISLAND SIZE SELECTION STATUS ===== */
+.base-island-ui.has-status .base-island-context{display:flex!important;align-items:center;justify-content:center;position:absolute;inset:0;width:100%;font-size:10px!important;letter-spacing:1.5px!important;color:rgba(255,255,255,.88)!important;font-weight:800!important;transform:none!important;pointer-events:none;}
+.base-island-ui.has-status .base-island-mark{opacity:0;transform:scale(.92);transition:opacity .16s ease,transform .2s ease;}
+.base-island-ui .base-island-mark{transition:opacity .16s ease,transform .2s ease;}
+@media(max-width:600px){.base-island-ui.has-status .base-island-context{font-size:9px!important;letter-spacing:1.35px!important}}
+@media(prefers-reduced-motion:reduce){.base-island-ui .base-island-mark,.base-island-ui.has-status .base-island-context{transition:none!important}}
