@@ -30,13 +30,28 @@
     const content=ui.querySelector('#base-island-content');
     const context=ui.querySelector('.base-island-context');
     const vibrate=()=>{try{navigator.vibrate?.(7)}catch(e){}};
+    let statusTimer=null;
+    let baseLabel='CATALOG';
+    let statusLabel='';
+    function showStatus(label,duration=1200){
+      clearTimeout(statusTimer);
+      statusLabel=label||'';
+      context.textContent=statusLabel||baseLabel;
+      ui.classList.toggle('has-status',!!statusLabel);
+      if(statusLabel&&duration>0)statusTimer=setTimeout(()=>showStatus('',0),duration);
+    }
+    window.BASEIsland={
+      status:(label,duration)=>{showStatus(label,duration);vibrate()},
+      setBaseLabel:(label)=>{baseLabel=label||'CATALOG';if(!statusLabel)context.textContent=baseLabel}
+    };
     const productTitle=()=>document.getElementById('product-title')?.textContent?.trim()||'';
     const productImage=()=>document.getElementById('product-image')?.getAttribute('src')||'';
 
     function render(){
       const p=productTitle();
       if(p){
-        context.textContent='PRODUCT';
+        baseLabel='PRODUCT';
+        if(!statusLabel)context.textContent='PRODUCT';
         content.innerHTML=`
           <div class="base-island-product">
             <div class="base-island-product-thumb">${productImage()?'<img src="'+productImage()+'" alt="">':''}</div>
@@ -48,7 +63,8 @@
             <button type="button" class="base-island-mini-action" data-focus="product">Товар</button>
           </div>`;
       }else{
-        context.textContent='CATALOG';
+        baseLabel='CATALOG';
+        if(!statusLabel)context.textContent='CATALOG';
         content.innerHTML='';
       }
     }
