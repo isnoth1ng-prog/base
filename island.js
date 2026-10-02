@@ -78,10 +78,6 @@
       const action=e.target.closest('[data-island-action]')?.dataset.islandAction;
       if(action==='theme'){themeBtn?.click();render();return}
       if(action==='close'){setOpen(false,false);return}
-      if(e.target.closest('[data-focus="product"]')){
-        setOpen(false,false);
-        document.getElementById('product-title')?.scrollIntoView({behavior:'smooth',block:'start'});
-      }
     });
 
     document.addEventListener('click',e=>{
