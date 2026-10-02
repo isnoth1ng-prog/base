@@ -1550,3 +1550,56 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .base-island-main{height:38px!important}
   .base-island-ui.is-expanded{width:calc(100vw - 24px)!important}
 }
+
+
+/* ===== DYNAMIC ISLAND EXPANDED COMPACT ===== */
+.base-island-ui.is-expanded{
+  width:min(300px,calc(100vw - 32px))!important;
+  border-radius:22px!important;
+}
+.base-island-ui.is-expanded .base-island-main{
+  height:38px!important;
+  padding-left:12px!important;
+}
+.base-island-ui.is-expanded .base-island-expanded{
+  padding-left:9px!important;
+  padding-right:9px!important;
+  padding-bottom:9px!important;
+}
+.base-island-ui.is-expanded .base-island-content{
+  min-height:0!important;
+  padding:6px 1px 7px!important;
+}
+.base-island-actions{
+  gap:3px!important;
+}
+.base-island-actions a,.base-island-actions button{
+  min-height:29px!important;
+  border-radius:8px!important;
+  font-size:8px!important;
+  padding:0 3px!important;
+}
+@media(max-width:600px){
+  .base-island-ui.is-expanded{
+    width:min(292px,calc(100vw - 32px))!important;
+    border-radius:21px!important;
+  }
+  .base-island-ui.is-expanded .base-island-main{
+    height:37px!important;
+  }
+  .base-island-ui.is-expanded .base-island-expanded{
+    padding-left:8px!important;
+    padding-right:8px!important;
+    padding-bottom:8px!important;
+  }
+  .base-island-ui.is-expanded .base-island-content{
+    padding:4px 1px 5px!important;
+  }
+  .base-island-actions{
+    grid-template-columns:repeat(4,1fr)!important;
+  }
+  .base-island-actions a,.base-island-actions button{
+    min-height:28px!important;
+    font-size:7.5px!important;
+  }
+}
