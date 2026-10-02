@@ -1856,3 +1856,31 @@ html[data-theme="light"] .footer-brand img{
   .base-island-mark{width:50px!important;height:22px!important;flex-basis:50px!important}
   .base-island-mark img{width:50px!important;height:22px!important;transform:scale(1.5)!important}
 }
+
+
+/* ===== ISLAND LOGO: KEEP ORIGINAL PROPORTIONS ===== */
+.base-island-mark{
+  width:28px!important;
+  height:28px!important;
+  flex:0 0 28px!important;
+  overflow:visible!important;
+  justify-content:center!important;
+}
+.base-island-mark img{
+  width:28px!important;
+  height:28px!important;
+  object-fit:contain!important;
+  transform:none!important;
+  filter:invert(1)!important;
+}
+@media(max-width:600px){
+  .base-island-mark{
+    width:26px!important;
+    height:26px!important;
+    flex-basis:26px!important;
+  }
+  .base-island-mark img{
+    width:26px!important;
+    height:26px!important;
+  }
+}
