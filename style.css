@@ -1831,3 +1831,28 @@ html[data-theme="light"] .footer-brand img{
   .hero-logo{transform:scale(1.45)!important}
   .footer-brand img{transform:scale(1.45)!important}
 }
+
+
+/* ===== BASE LOGO INSIDE DYNAMIC ISLAND ===== */
+.base-island-mark{
+  display:flex!important;
+  align-items:center!important;
+  width:54px!important;
+  height:24px!important;
+  overflow:visible!important;
+  flex:0 0 54px!important;
+}
+.base-island-mark img{
+  display:block!important;
+  width:54px!important;
+  height:24px!important;
+  object-fit:contain!important;
+  object-position:left center!important;
+  transform:scale(1.65)!important;
+  transform-origin:left center!important;
+  filter:invert(1)!important;
+}
+@media(max-width:600px){
+  .base-island-mark{width:50px!important;height:22px!important;flex-basis:50px!important}
+  .base-island-mark img{width:50px!important;height:22px!important;transform:scale(1.5)!important}
+}
