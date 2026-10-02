@@ -50,30 +50,22 @@
             <button class="product-buy" id="product-buy" type="button">Заказать</button>
           </div>
 
+          <div class="product-trust" aria-label="Условия заказа">
+            <div class="product-trust-item"><strong>Доставка 7–14 дней</strong>По России</div>
+            <div class="product-trust-item"><strong>Оплата после подтверждения</strong>Без предоплаты на сайте</div>
+          </div>
+
           <div class="product-detail-specs">
             <div class="product-detail-spec"><span>Материал</span><strong id="product-material"></strong></div>
             <div class="product-detail-spec"><span>Посадка</span><strong id="product-fit"></strong></div>
             <div class="product-detail-spec"><span>Доставка</span><strong>7–14 дней</strong></div>
             <div class="product-detail-spec"><span>Оформление</span><strong>Telegram</strong></div>
           </div>
-          <p class="product-detail-note">Выбери размер и цвет, затем добавь вещь в корзину или оформи её сразу. После подтверждения заказа согласуем оплату и данные для доставки.</p>
+          <p class="product-detail-note">Выбери размер и цвет, нажми «Заказать» и заполни данные для доставки. После этого откроется Telegram с готовым сообщением для подтверждения заказа.</p>
         </div>
       </section>
     </div>
   </main>
-
-  <div class="sheet-overlay" id="cart-sheet-overlay">
-    <div class="product-sheet cart-sheet">
-      <button class="sheet-close" id="cart-close" type="button" aria-label="Закрыть">×</button>
-      <div class="sheet-body">
-        <h2 class="cart-title">Корзина</h2>
-        <p class="cart-empty" id="cart-empty">Пока пусто. Добавь вещь из каталога.</p>
-        <div class="cart-items" id="cart-items"></div>
-        <button class="btn-order disabled" id="cart-order" type="button" aria-disabled="true">Оформить в Telegram</button>
-        <p class="cart-note">Заказ уйдёт в личные сообщения @nthngv</p>
-      </div>
-    </div>
-  </div>
 
 <div class="checkout-overlay" id="checkout-overlay" aria-hidden="true"><div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title"><button class="checkout-close" id="checkout-close" type="button" aria-label="Закрыть">×</button><div class="checkout-body"><div class="checkout-kicker">BASE / ORDER</div><h2 class="checkout-title" id="checkout-title">Данные для доставки</h2><p class="checkout-intro">Заполни данные — после этого откроется Telegram с уже готовым заказом.</p><form id="checkout-form" novalidate><label class="checkout-field"><span>ФИО</span><input id="checkout-name" type="text" autocomplete="name" placeholder="Иван Иванов" required></label><label class="checkout-field"><span>Контактный номер</span><input id="checkout-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required></label><label class="checkout-field"><span>Адрес доставки</span><textarea id="checkout-address" rows="3" autocomplete="street-address" placeholder="Город, улица, дом, квартира" required></textarea></label><label class="checkout-field"><span>Почтовый индекс</span><input id="checkout-postcode" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="123456" required></label><p class="checkout-error" id="checkout-error" role="alert" hidden></p><button class="checkout-submit" type="submit">Продолжить в Telegram</button><p class="checkout-note">Проверь данные перед переходом в Telegram.</p></form></div></div></div>
   <script src="product-page.js?v=20261002-4"></script>
