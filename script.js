@@ -406,12 +406,12 @@ if (themeToggle) {
     function openCart() {
         if (!cartSheet) return;
         updateCartUI();
-        cartSheet.classList.add('open');
+        cartSheet.classList.add('open','active');
         document.body.style.overflow = 'hidden';
     }
     function closeCart() {
         if (!cartSheet) return;
-        cartSheet.classList.remove('open');
+        cartSheet.classList.remove('open','active');
         document.body.style.overflow = '';
     }
 
@@ -421,6 +421,9 @@ if (themeToggle) {
     if (cartSheet) cartSheet.addEventListener('click', (e) => {
         if (e.target === cartSheet) closeCart();
     });
+
+    // Keep the island and the real cart sheet on the same open/close state.
+    window.addEventListener('base:close-cart', closeCart);
 
     if (cartItems) cartItems.addEventListener('click', (e) => {
         const btn = e.target.closest('[data-action]');
