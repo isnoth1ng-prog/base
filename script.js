@@ -1,7 +1,7 @@
 const products = [
     {
         id: '1',
-        title: 'J-01',
+        title: 'C-01',
         subtitle: 'Белый · Wide fit',
         price: 2990,
         image: 'images_cards/card_pants-white.jpg',
@@ -13,7 +13,7 @@ const products = [
     },
     {
         id: '2',
-        title: 'C-01',
+        title: 'P-01',
         subtitle: 'Бежевый · Relaxed fit',
         price: 2990,
         image: 'images_cards/card_pants-beige.jpg',
@@ -61,7 +61,7 @@ const products = [
     },
     {
         id: '6',
-        title: 'J-02',
+        title: 'C-02',
         subtitle: 'Голубой · Wide fit',
         price: 2990,
         image: 'images_cards/card_jeans-blue.jpg',
@@ -73,7 +73,7 @@ const products = [
     },
     {
         id: '7',
-        title: 'BASE WIDE JEANS',
+        title: 'C-03',
         subtitle: 'Черный · Wide fit',
         price: 2990,
         image: 'images_cards/card_jeans-black.jpg',
