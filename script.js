@@ -115,180 +115,44 @@ const CHANNEL_URL = 'https://t.me/basewear_shop';
 let cart = [];
 
 const grid = document.getElementById('products-grid');
-const overlay = document.getElementById('product-sheet-overlay');
-const closeBtn = document.getElementById('sheet-close');
-const btnOrder = document.getElementById('btn-order');
 const tabs = document.getElementById('catalog-tabs');
-
-let currentProduct = null;
-let selectedColor = null;
-let selectedSize = null;
 let activeFilter = 'all';
 
 function haptic() {
-    try {
-        if (navigator.vibrate) navigator.vibrate(8);
-    } catch (e) {}
+    try { if (navigator.vibrate) navigator.vibrate(8); } catch (e) {}
 }
 
 function renderCatalog(filter) {
     activeFilter = filter || 'all';
+    if (!grid) return;
     grid.innerHTML = '';
-
-    const list = activeFilter === 'all'
-        ? products
-        : products.filter(p => p.category === activeFilter);
+    const list = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
 
     list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.innerHTML = `
-            <div class="product-img-box">
-                <div class="img-skeleton"></div>
-                <img src="${p.image}" alt="${p.title}" loading="lazy">
-                <span class="card-badge">Под заказ</span>
-            </div>
-            <div class="product-meta">
-                <div class="product-name">${p.title}</div>
-                <div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
-            </div>
-        `;
+        card.innerHTML = \
+`<div class="product-img-box"><div class="img-skeleton"></div><img src="${p.image}" alt="${p.title}" loading="lazy"><span class="card-badge">Под заказ</span></div><div class="product-meta"><div class="product-name">${p.title}</div><div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div></div>`;
         const img = card.querySelector('img');
         const sk = card.querySelector('.img-skeleton');
-        img.addEventListener('load', () => {
-            img.classList.add('loaded');
-            if (sk) sk.remove();
-        });
-        if (img.complete) {
-            img.classList.add('loaded');
-            if (sk) sk.remove();
-        }
+        img.addEventListener('load', () => { img.classList.add('loaded'); if (sk) sk.remove(); });
+        if (img.complete) { img.classList.add('loaded'); if (sk) sk.remove(); }
         card.addEventListener('click', () => {
             haptic();
             card.classList.add('tapped');
             setTimeout(() => card.classList.remove('tapped'), 180);
-            openSheet(p);
+            location.href = 'product.html?id=' + encodeURIComponent(p.id);
         });
         grid.appendChild(card);
     });
 }
-
-function openSheet(product) {
-    currentProduct = product;
-    selectedColor = null;
-    selectedSize = null;
-
-    document.getElementById('sheet-img').src = product.image;
-    document.getElementById('sheet-title').textContent = product.title;
-    document.getElementById('sheet-subtitle').textContent = product.subtitle;
-    document.getElementById('sheet-price').textContent = `${product.price.toLocaleString('ru-RU')} ₽`;
-
-    const matRow = document.getElementById('detail-material');
-    if (product.material) {
-        matRow.style.display = 'flex';
-        document.getElementById('val-material').textContent = product.material;
-    } else {
-        matRow.style.display = 'none';
-    }
-
-    const fitRow = document.getElementById('detail-fit');
-    if (product.fit) {
-        fitRow.style.display = 'flex';
-        document.getElementById('val-fit').textContent = product.fit;
-    } else {
-        fitRow.style.display = 'none';
-    }
-
-    const colorsBox = document.getElementById('sheet-colors');
-    colorsBox.innerHTML = '';
-    if (product.colors && product.colors.length > 0) {
-        document.getElementById('color-section').style.display = 'block';
-        product.colors.forEach(color => {
-            const btn = document.createElement('button');
-            btn.className = 'chip';
-            btn.textContent = color;
-            if (product.colors.length === 1) {
-                btn.classList.add('active');
-                selectedColor = color;
-            }
-            btn.onclick = () => {
-                haptic();
-                document.querySelectorAll('#sheet-colors .chip').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                selectedColor = color;
-                updateCtaState();
-            };
-            colorsBox.appendChild(btn);
-        });
-    } else {
-        document.getElementById('color-section').style.display = 'none';
-        selectedColor = 'Standard';
-    }
-
-    const sizesBox = document.getElementById('sheet-sizes');
-    sizesBox.innerHTML = '';
-    if (product.sizes && product.sizes.length > 0) {
-        document.getElementById('size-section').style.display = 'block';
-        product.sizes.forEach(size => {
-            const btn = document.createElement('button');
-            btn.className = 'chip';
-            btn.textContent = size;
-            btn.onclick = () => {
-                haptic();
-                document.querySelectorAll('#sheet-sizes .chip').forEach(c => c.classList.remove('active'));
-                btn.classList.add('active');
-                selectedSize = size;
-                updateCtaState();
-            };
-            sizesBox.appendChild(btn);
-        });
-    } else {
-        document.getElementById('size-section').style.display = 'none';
-        selectedSize = 'Standard';
-    }
-
-    updateCtaState();
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeSheet() {
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-function updateCtaState() {
-    const btnText = btnOrder.querySelector('.btn-text');
-    if (currentProduct.sizes && currentProduct.sizes.length > 0 && !selectedSize) {
-        btnOrder.classList.add('disabled');
-        btnText.textContent = 'Выберите размер';
-        return;
-    }
-    if (currentProduct.colors && currentProduct.colors.length > 0 && !selectedColor) {
-        btnOrder.classList.add('disabled');
-        btnText.textContent = 'Выберите цвет';
-        return;
-    }
-    btnOrder.classList.remove('disabled');
-    btnText.textContent = 'Заказать в Telegram';
-}
-
-closeBtn.addEventListener('click', closeSheet);
-overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeSheet();
-});
-
-/* btnOrder wired in initCartUI */
 
 if (tabs) {
     tabs.addEventListener('click', (e) => {
         const btn = e.target.closest('.tab');
         if (!btn) return;
         haptic();
-        tabs.querySelectorAll('.tab').forEach(t => {
-            t.classList.remove('active');
-            t.setAttribute('aria-selected', 'false');
-        });
+        tabs.querySelectorAll('.tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
         btn.classList.add('active');
         btn.setAttribute('aria-selected', 'true');
         renderCatalog(btn.dataset.filter);
