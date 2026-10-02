@@ -1479,3 +1479,29 @@ html[data-theme="light"] .footer-brand img{
 .base-island-ui .base-island-mark{transition:opacity .16s ease,transform .2s ease;}
 @media(max-width:600px){.base-island-ui.has-status .base-island-context{font-size:9px!important;letter-spacing:1.35px!important}}
 @media(prefers-reduced-motion:reduce){.base-island-ui .base-island-mark,.base-island-ui.has-status .base-island-context{transition:none!important}}
+
+
+/* ===== ISLAND LOGO — LARGER VISUAL SIZE ===== */
+.base-island-mark{
+  width:38px!important;
+  height:34px!important;
+  flex:0 0 38px!important;
+}
+.base-island-mark img{
+  width:34px!important;
+  height:34px!important;
+  transform:scale(1.28)!important;
+  transform-origin:center!important;
+}
+@media(max-width:600px){
+  .base-island-mark{
+    width:36px!important;
+    height:32px!important;
+    flex-basis:36px!important;
+  }
+  .base-island-mark img{
+    width:32px!important;
+    height:32px!important;
+    transform:scale(1.22)!important;
+  }
+}
