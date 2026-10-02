@@ -1909,3 +1909,24 @@ html[data-theme="light"] .footer-brand img{
 .base-island-mark{width:52px!important;height:28px!important;flex:0 0 52px!important}
 .base-island-mark img{width:28px!important;height:28px!important;transform:scaleX(2.15)!important;transform-origin:center!important;filter:invert(1)!important}
 @media(max-width:600px){.base-island-mark{width:48px!important;height:26px!important;flex-basis:48px!important}.base-island-mark img{width:26px!important;height:26px!important;transform:scaleX(2.05)!important}}
+
+
+/* ===== ISLAND HAPTIC FEEL ===== */
+.base-island-main,
+.base-island-actions a,
+.base-island-actions button{
+  -webkit-tap-highlight-color:transparent!important;
+  touch-action:manipulation!important;
+  user-select:none!important;
+  -webkit-user-select:none!important;
+}
+.base-island-main.is-pressed{
+  animation:base-island-haptic-press 120ms cubic-bezier(.2,.8,.2,1)!important;
+}
+@keyframes base-island-haptic-press{
+  0%{transform:scale(1)}
+  38%{transform:scale(.91)}
+  72%{transform:scale(1.025)}
+  100%{transform:scale(1)}
+}
+@media(prefers-reduced-motion:reduce){.base-island-main.is-pressed{animation:none!important}}
