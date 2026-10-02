@@ -15,7 +15,7 @@ const products = [
         id: '2',
         title: 'WIDE CARGO PANTS',
         subtitle: 'Бежевый · Relaxed fit',
-        price: 3290,
+        price: 2990,
         image: 'images_cards/card_pants-beige.jpg',
         category: 'pants',
         material: 'Хлопок / Полиэстер',
