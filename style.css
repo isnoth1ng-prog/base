@@ -1884,3 +1884,10 @@ html[data-theme="light"] .footer-brand img{
     height:26px!important;
   }
 }
+
+
+/* Header logo is duplicated by the Dynamic Island logo; keep the header clean. */
+.glass-header .brand-logo{display:none!important;}
+/* No location/context label inside the island; the logo is the identity. */
+.base-island-context{display:none!important;}
+.base-island-main{justify-content:center!important;}
