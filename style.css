@@ -1891,3 +1891,9 @@ html[data-theme="light"] .footer-brand img{
 /* No location/context label inside the island; the logo is the identity. */
 .base-island-context{display:none!important;}
 .base-island-main{justify-content:center!important;}
+
+
+/* ===== ISLAND LOGO — WIDER ===== */
+.base-island-mark{width:36px!important;height:28px!important;flex:0 0 36px!important}
+.base-island-mark img{width:36px!important;height:28px!important;object-fit:contain!important;transform:scale(1.12)!important;transform-origin:center!important}
+@media(max-width:600px){.base-island-mark{width:34px!important;height:26px!important;flex-basis:34px!important}.base-island-mark img{width:34px!important;height:26px!important;transform:scale(1.1)!important}}
