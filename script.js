@@ -129,7 +129,7 @@ function renderCatalog(filter) {
     list.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.innerHTML = `<div class="product-img-box"><div class="img-skeleton"></div><img src="${p.image}" alt="${p.title}" loading="lazy"><span class="card-badge">Под заказ</span></div><div class="product-meta"><div class="product-name">${p.title}</div><div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div></div>`;
+        card.innerHTML = `<div class="product-img-box"><div class="img-skeleton"></div><img src="${p.image}" alt="${p.title}" loading="lazy"><span class="card-badge">Под заказ</span></div><div class="product-meta"><div class="product-name">${p.title}</div><div class="product-subtitle">${p.subtitle}</div><div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div></div>`;
         const img = card.querySelector('img');
         const sk = card.querySelector('.img-skeleton');
         img.addEventListener('load', () => { img.classList.add('loaded'); if (sk) sk.remove(); });
