@@ -1603,3 +1603,14 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
     font-size:7.5px!important;
   }
 }
+
+/* ===== BASE ISLAND LIVE SYSTEM ===== */
+.base-island-context{transition:opacity .16s ease,transform .28s var(--spring),letter-spacing .25s ease}
+.base-island-ui.has-status .base-island-context{transform:scale(1.04);letter-spacing:1.35px!important}
+.base-island-main:active .base-island-context{transform:scale(.94)}
+@media(max-width:600px){
+  .base-island-ui.is-expanded .base-island-main{height:36px!important}
+  .base-island-ui.is-expanded .base-island-expanded{padding-top:0!important;padding-bottom:7px!important}
+  .base-island-ui.is-expanded .base-island-content{padding-top:2px!important;padding-bottom:3px!important}
+  .base-island-actions a,.base-island-actions button{min-height:27px!important;font-size:7.5px!important}
+}
