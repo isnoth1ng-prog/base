@@ -16,10 +16,12 @@ const money=n=>Number(n).toLocaleString('ru-RU')+' ₽';
 const TG='nthngv';
 
 function vibrate(){try{navigator.vibrate?.(8)}catch(e){}}
+function islandStatus(label,duration=1200){window.BASEIsland?.status(label,duration)}
 function telegramUrl(message){return 'https://t.me/'+TG+'?text='+encodeURIComponent(message)}
 
 function openCheckout(item){
   if(!item)return;
+  islandStatus('ORDER',1600);
   const overlay=$('checkout-overlay'),form=$('checkout-form');
   if(!overlay||!form)return;
   form.dataset.item=JSON.stringify(item);
@@ -43,6 +45,7 @@ function buyNow(){
   if(!product)return;
   const target=!color ? $('product-colors') : (!size ? $('product-sizes') : null);
   if(target){
+    islandStatus('SIZE',1000);
     target.closest('.product-option')?.scrollIntoView({behavior:'smooth',block:'center'});
     target.classList.add('selection-attention');
     setTimeout(()=>target.classList.remove('selection-attention'),1200);
@@ -62,6 +65,7 @@ function chips(box,values,setter,autoSelectFirst=false){
       box.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
       setter(v);
+      islandStatus('SIZE '+v,900);
       vibrate();
     });
     box.appendChild(b);
@@ -102,6 +106,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const postcode=$('checkout-postcode')?.value.trim();
     const error=$('checkout-error');
     if(!name||!phone||!address||!postcode){
+      islandStatus('CHECK',900);
       if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}
       return;
     }
@@ -125,6 +130,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       'Готов подтвердить заказ.'
     ];
     const url=telegramUrl(lines.join('\n'));
+    islandStatus('READY ✓',1500);
     const submit=$('checkout-form')?.querySelector('.checkout-submit');
     if(submit){submit.disabled=true;submit.textContent='Открываем Telegram…';submit.style.opacity='.72'}
     setTimeout(()=>{
