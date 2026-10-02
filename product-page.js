@@ -80,11 +80,11 @@ function buyNow(){
   if(!product)return;
   const item={id:product.id,title:product.title,color:color||'',size:size||'',price:product.price,image:product.image,qty:1};
   if(!color||!size){
-    const option=document.querySelector('.product-option:nth-of-type(2)');
+    const target=!color ? $('product-colors') : $('product-sizes');
+    const option=target?.closest('.product-option');
     option?.scrollIntoView({behavior:'smooth',block:'center'});
-    const sizeBox=$('product-sizes');
-    sizeBox?.classList.add('selection-attention');
-    setTimeout(()=>sizeBox?.classList.remove('selection-attention'),900);
+    target?.classList.add('selection-attention');
+    setTimeout(()=>target?.classList.remove('selection-attention'),900);
     return;
   }
   openCheckout([item]);
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   load();renderCart();
 
   $('product-add').addEventListener('click',()=>{if(color&&size)add()});
-  $('product-buy').addEventListener('click',e=>{e.preventDefault();if(color&&size)buyNow()});
+  $('product-buy').addEventListener('click',e=>{e.preventDefault();buyNow()});
 
   $('cart-btn').addEventListener('click',openCart);
   $('cart-close').addEventListener('click',closeCart);
