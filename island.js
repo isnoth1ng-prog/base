@@ -17,10 +17,9 @@
       <div class="base-island-expanded" aria-hidden="true">
         <div class="base-island-content" id="base-island-content"></div>
         <div class="base-island-actions">
-          <a href="index.html#catalog" aria-label="Каталог" title="Каталог" data-island-action="close"><span aria-hidden="true">▦</span></a>
-          <a href="index.html#how" aria-label="Как заказать" title="Как заказать" data-island-action="close"><span aria-hidden="true">?</span></a>
-          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram" data-island-action="close"><span aria-hidden="true">➤</span></a>
-          <button type="button" aria-label="Тема" title="Тема" data-island-action="theme"><span aria-hidden="true">◐</span></button>
+          <a href="index.html#how" aria-label="Как заказать" title="Как заказать" data-island-action="close"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="8.5"></circle><path d="M9.8 9.4a2.3 2.3 0 1 1 3.9 1.6c-.9.8-1.7 1.2-1.7 2.5"></path><path d="M12 16.9h.01"></path></svg></span></a>
+          <a href="https://t.me/nthngv" target="_blank" rel="noopener noreferrer" aria-label="Telegram" title="Telegram" data-island-action="close"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20.2 4.7 3.8 10.9c-.8.3-.8.9-.1 1.2l4.2 1.5 1.6 5c.2.6.5.7.9.2l2.4-2.4 4.3 3.2c.5.3.9.1 1-.5l2.9-13.4c.1-.7-.3-1-0.8-.8Z"></path><path d="m8 13.5 8.7-6.1-6.6 7.1"></path></svg></span></a>
+          <button type="button" aria-label="Тема" title="Тема" data-island-action="theme"><span aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 14.2A8.5 8.5 0 1 1 9.8 4 6.8 6.8 0 0 0 20 14.2Z"></path></svg></span></button>
         </div>
       </div>`;
     inner.appendChild(ui);
