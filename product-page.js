@@ -77,8 +77,16 @@ function add(){
 }
 
 function buyNow(){
-  if(!product||!color||!size)return;
-  const item={id:product.id,title:product.title,color,size,price:product.price,image:product.image,qty:1};
+  if(!product)return;
+  const item={id:product.id,title:product.title,color:color||'',size:size||'',price:product.price,image:product.image,qty:1};
+  if(!color||!size){
+    const option=document.querySelector('.product-option:nth-of-type(2)');
+    option?.scrollIntoView({behavior:'smooth',block:'center'});
+    const sizeBox=$('product-sizes');
+    sizeBox?.classList.add('selection-attention');
+    setTimeout(()=>sizeBox?.classList.remove('selection-attention'),900);
+    return;
+  }
   openCheckout([item]);
 }
 
@@ -136,10 +144,32 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
 
   $('cart-order').addEventListener('click',e=>{e.preventDefault();if(!cart.length||cart.some(x=>!x.size||!x.color))return;openCheckout(cart)});
-  function openCheckout(items){const overlay=$('checkout-overlay'),form=$('checkout-form');if(!overlay||!form)return;form.dataset.items=JSON.stringify(items);overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('checkout-name')?.focus(),120)}
+  function openCheckout(items){
+    if(!items?.length)return;
+    const overlay=$('checkout-overlay'),form=$('checkout-form');
+    if(!overlay||!form)return;
+    form.dataset.items=JSON.stringify(items);
+    const error=$('checkout-error');
+    if(error){error.hidden=true;error.textContent=''}
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    requestAnimationFrame(()=>overlay.classList.add('open'));
+    setTimeout(()=>$('checkout-name')?.focus(),140);
+  }
   function closeCheckout(){const overlay=$('checkout-overlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
   $('checkout-close')?.addEventListener('click',closeCheckout);$('checkout-overlay')?.addEventListener('click',e=>{if(e.target.id==='checkout-overlay')closeCheckout()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout()});
-  $('checkout-form')?.addEventListener('submit',e=>{e.preventDefault();const name=$('checkout-name')?.value.trim(),phone=$('checkout-phone')?.value.trim(),address=$('checkout-address')?.value.trim(),postcode=$('checkout-postcode')?.value.trim(),error=$('checkout-error');if(!name||!phone||!address||!postcode){if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}return}let items=[];try{items=JSON.parse($('checkout-form').dataset.items||'[]')}catch(_){}if(!items.length)return;window.open(telegramUrl(cartMessage(items,name,phone,address,postcode)),'_blank','noopener,noreferrer');closeCheckout()});
+  $('checkout-form')?.addEventListener('submit',e=>{
+    e.preventDefault();
+    const name=$('checkout-name')?.value.trim(),phone=$('checkout-phone')?.value.trim(),address=$('checkout-address')?.value.trim(),postcode=$('checkout-postcode')?.value.trim(),error=$('checkout-error');
+    if(!name||!phone||!address||!postcode){if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}return}
+    let items=[];try{items=JSON.parse($('checkout-form').dataset.items||'[]')}catch(_){}
+    if(!items.length){if(error){error.textContent='Не удалось собрать заказ. Вернись к товару и попробуй ещё раз.';error.hidden=false}return}
+    const url=telegramUrl(cartMessage(items,name,phone,address,postcode));
+    const tg=window.open(url,'_blank');
+    if(!tg) location.href=url;
+    closeCheckout();
+  });
   const themeBtn=$('theme-toggle');
   if(themeBtn)themeBtn.addEventListener('click',()=>{
     const next=document.documentElement.dataset.theme==='light'?'dark':'light';
