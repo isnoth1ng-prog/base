@@ -54,7 +54,7 @@ function buyNow(){
   openCheckout({id:product.id,title:product.title,color,size,price:product.price,qty:1});
 }
 
-function chips(box,values,setter,autoSelectFirst=false){
+function chips(box,values,setter,autoSelectFirst=false,isSize=false){
   box.innerHTML='';
   (values||[]).forEach((v,i)=>{
     const b=document.createElement('button');
@@ -66,7 +66,7 @@ function chips(box,values,setter,autoSelectFirst=false){
       b.classList.add('active');
       setter(v);
       window.BASEIsland?.refresh?.();
-      islandStatus('SIZE '+v,900);
+      islandStatus((isSize?'РАЗМЕР ':'SIZE ')+v,900);
       vibrate();
     });
     box.appendChild(b);
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('product-fit').textContent=product.fit;
 
   chips($('product-colors'),product.colors,v=>{color=v;syncBuyState()},true);
-  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()});
+  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()},false,true);
 
   $('product-buy').addEventListener('click',e=>{e.preventDefault();buyNow()});
   $('checkout-close')?.addEventListener('click',closeCheckout);
