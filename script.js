@@ -112,8 +112,6 @@ const products = [
 const TG_USERNAME = 'nthngv';
 const CHANNEL_URL = 'https://t.me/basewear_shop';
 
-let cart = [];
-
 const grid = document.getElementById('products-grid');
 const tabs = document.getElementById('catalog-tabs');
 let activeFilter = 'all';
