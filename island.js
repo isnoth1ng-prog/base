@@ -53,8 +53,8 @@
           <div class="base-island-welcome">
             <span class="base-island-welcome-mark">BASE.</span>
             <div>
-              <strong>ФОРМА БЕЗ ЛИШНЕГО</strong>
-              <span>Каталог · под заказ · 7–14 дней</span>
+              <strong>Каталог</strong>
+              <span>Под заказ · 7–14 дней</span>
             </div>
           </div>`;
       }
