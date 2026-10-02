@@ -1,6 +1,6 @@
 const PRODUCTS=[
 {id:'1',title:'BASE WIDE JEANS',subtitle:'Белый · Wide fit',price:2990,image:'images_cards/card_pants-white.jpg',material:'100% Хлопок (Деним)',fit:'Wide / Relaxed',colors:['White'],sizes:['S','M','L','XL']},
-{id:'2',title:'WIDE CARGO PANTS',subtitle:'Бежевый · Relaxed fit',price:3290,image:'images_cards/card_pants-beige.jpg',material:'Хлопок / Полиэстер',fit:'Relaxed',colors:['Beige'],sizes:['S','M','L','XL']},
+{id:'2',title:'WIDE CARGO PANTS',subtitle:'Бежевый · Relaxed fit',price:2990,image:'images_cards/card_pants-beige.jpg',material:'Хлопок / Полиэстер',fit:'Relaxed',colors:['Beige'],sizes:['S','M','L','XL']},
 {id:'3',title:'ESSENTIAL ZIP HOODIE',subtitle:'Черный · Regular fit',price:2990,image:'images_cards/card_hoodie-black.jpg',material:'80% Хлопок, 20% Полиэстер',fit:'Regular',colors:['Black'],sizes:['M','L','XL','XXL']},
 {id:'4',title:'OVERSIZE SWEATPANTS',subtitle:'Серый меланж · Oversize',price:2190,image:'images_cards/card_sweatpants-grey.jpg',material:'Хлопок (Футер 3-х нитка)',fit:'Oversize',colors:['Grey'],sizes:['S','M','L']},
 {id:'5',title:'REVERSIBLE ZIP HOODIE',subtitle:'Черно-бордовый · Regular',price:2990,image:'images_cards/card_hoodie-redblack.jpg',material:'Хлопок, Флис',fit:'Regular',colors:['Black/Red'],sizes:['M','L','XL']},
