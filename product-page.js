@@ -78,15 +78,15 @@ function add(){
 
 function buyNow(){
   if(!product)return;
-  const item={id:product.id,title:product.title,color:color||'',size:size||'',price:product.price,image:product.image,qty:1};
-  if(!color||!size){
-    const target=!color ? $('product-colors') : $('product-sizes');
-    const option=target?.closest('.product-option');
+  const target=!color ? $('product-colors') : (!size ? $('product-sizes') : null);
+  if(target){
+    const option=target.closest('.product-option');
     option?.scrollIntoView({behavior:'smooth',block:'center'});
-    target?.classList.add('selection-attention');
-    setTimeout(()=>target?.classList.remove('selection-attention'),900);
+    target.classList.add('selection-attention');
+    setTimeout(()=>target.classList.remove('selection-attention'),1200);
     return;
   }
+  const item={id:product.id,title:product.title,color,size,price:product.price,image:product.image,qty:1};
   openCheckout([item]);
 }
 
@@ -104,7 +104,11 @@ function chips(box,values,setter,autoSelectFirst=false){
 function syncBuyState(){
   const buy=$('product-buy'),addBtn=$('product-add');
   const ready=!!color&&!!size;
-  [buy,addBtn].forEach(b=>{if(!b)return;b.classList.toggle('disabled',!ready);b.setAttribute('aria-disabled',ready?'false':'true')});
+  if(buy)buy.setAttribute('aria-disabled',ready?'false':'true');
+  if(addBtn){
+    addBtn.classList.toggle('disabled',!ready);
+    addBtn.setAttribute('aria-disabled',ready?'false':'true');
+  }
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
@@ -145,7 +149,7 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   $('cart-order').addEventListener('click',e=>{e.preventDefault();if(!cart.length||cart.some(x=>!x.size||!x.color))return;openCheckout(cart)});
   function openCheckout(items){
-    if(!items?.length)return;
+    if(!Array.isArray(items)||!items.length)return;
     const overlay=$('checkout-overlay'),form=$('checkout-form');
     if(!overlay||!form)return;
     form.dataset.items=JSON.stringify(items);
@@ -154,7 +158,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden','false');
     document.body.style.overflow='hidden';
-    requestAnimationFrame(()=>overlay.classList.add('open'));
     setTimeout(()=>$('checkout-name')?.focus(),140);
   }
   function closeCheckout(){const overlay=$('checkout-overlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
