@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   $('product-fit').textContent=product.fit;
 
   chips($('product-colors'),product.colors,v=>{color=v;syncBuyState()},true);
-  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()},false);
+  chips($('product-sizes'),product.sizes,v=>{size=v;syncBuyState()},true);
 
   load();renderCart();
 
