@@ -1614,5 +1614,9 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
   .base-island-ui.is-expanded .base-island-content{padding-top:2px!important;padding-bottom:3px!important}
   .base-island-actions a,.base-island-actions button{min-height:27px!important;font-size:7.5px!important}
 }
-/* ===== BASE ISLAND PRODUCT MORPH ===== */
-.base-island-product-copy{min-width:0;display:grid!important;grid-template-columns:minmax(0,1fr) auto;column-gap:6px}.base-island-product-copy strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.base-island-product-copy span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.base-island-product-copy em{grid-column:2;grid-row:1 / span 2;align-self:center;font-style:normal;font-weight:700;white-space:nowrap}.base-island-ui.has-status .base-island-product{animation:baseIslandMorph .34s var(--spring)}@keyframes baseIslandMorph{0%{opacity:.65;transform:scale(.97)}100%{opacity:1;transform:scale(1)}}@media(max-width:600px){.base-island-product-copy strong{font-size:9px!important}.base-island-product-copy span,.base-island-product-copy em{font-size:7px!important}}
+
+/* ===== BASE ISLAND MINIMAL MOTION ===== */
+.base-island-context.is-context-shifting{animation:baseIslandContextShift .22s var(--spring)}
+.base-island-ui.is-touching{transform:scale(.985)}
+.base-island-ui{transition:transform .24s var(--spring),width .34s var(--spring),border-radius .34s var(--spring)}
+@keyframes baseIslandContextShift{0%{opacity:.35;transform:translateY(3px)}100%{opacity:1;transform:translateY(0)}}
