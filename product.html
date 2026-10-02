@@ -17,10 +17,6 @@
         <a href="index.html#catalog">Каталог</a>
         <a href="index.html#how">Заказ</a>
       </nav>
-      <button class="cart-btn" id="cart-btn" type="button" aria-label="Корзина" title="Корзина">
-        <svg viewBox="0 0 24 24" class="cart-icon" aria-hidden="true"><path d="M6 6h15l-1.5 9h-12z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M6 6 5 3H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="9" cy="20" r="1.2" fill="currentColor"/><circle cx="18" cy="20" r="1.2" fill="currentColor"/></svg>
-        <span class="cart-count" id="cart-count" hidden>0</span>
-      </button>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Переключить тему">
         <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg>
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24"><path d="M20.5 15.5A8.5 8.5 0 0 1 8.5 3.5a8.7 8.7 0 1 0 12 12Z"></path></svg>
@@ -51,7 +47,6 @@
           </div>
 
           <div class="product-actions">
-            <button class="product-add" id="product-add" type="button">В корзину</button>
             <button class="product-buy" id="product-buy" type="button">Заказать сейчас</button>
           </div>
 
@@ -81,7 +76,7 @@
   </div>
 
 <div class="checkout-overlay" id="checkout-overlay" aria-hidden="true"><div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title"><button class="checkout-close" id="checkout-close" type="button" aria-label="Закрыть">×</button><div class="checkout-body"><div class="checkout-kicker">BASE / ORDER</div><h2 class="checkout-title" id="checkout-title">Данные для доставки</h2><p class="checkout-intro">Заполни данные — после этого откроется Telegram с уже готовым заказом.</p><form id="checkout-form" novalidate><label class="checkout-field"><span>ФИО</span><input id="checkout-name" type="text" autocomplete="name" placeholder="Иван Иванов" required></label><label class="checkout-field"><span>Контактный номер</span><input id="checkout-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 900 000-00-00" required></label><label class="checkout-field"><span>Адрес доставки</span><textarea id="checkout-address" rows="3" autocomplete="street-address" placeholder="Город, улица, дом, квартира" required></textarea></label><label class="checkout-field"><span>Почтовый индекс</span><input id="checkout-postcode" type="text" inputmode="numeric" autocomplete="postal-code" placeholder="123456" required></label><p class="checkout-error" id="checkout-error" role="alert" hidden></p><button class="checkout-submit" type="submit">Продолжить в Telegram</button><p class="checkout-note">Проверь данные перед переходом в Telegram.</p></form></div></div></div>
-  <script src="product-page.js?v=20261002-3"></script>
-    <script src="island.js?v=20261002-2"></script>
+  <script src="product-page.js?v=20261002-4"></script>
+    <script src="island.js?v=20261002-3"></script>
 </body>
 </html>
