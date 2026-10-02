@@ -1903,3 +1903,9 @@ html[data-theme="light"] .footer-brand img{
 .base-island-mark{width:42px!important;height:28px!important;flex:0 0 42px!important}
 .base-island-mark img{width:28px!important;height:28px!important;transform:scaleX(1.65)!important;transform-origin:center!important;filter:invert(1)!important}
 @media(max-width:600px){.base-island-mark{width:40px!important;height:26px!important;flex-basis:40px!important}.base-island-mark img{width:26px!important;height:26px!important;transform:scaleX(1.6)!important}}
+
+
+/* ===== ISLAND LOGO — STRONGER WIDTH ===== */
+.base-island-mark{width:52px!important;height:28px!important;flex:0 0 52px!important}
+.base-island-mark img{width:28px!important;height:28px!important;transform:scaleX(2.15)!important;transform-origin:center!important;filter:invert(1)!important}
+@media(max-width:600px){.base-island-mark{width:48px!important;height:26px!important;flex-basis:48px!important}.base-island-mark img{width:26px!important;height:26px!important;transform:scaleX(2.05)!important}}
