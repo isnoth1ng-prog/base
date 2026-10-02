@@ -444,37 +444,13 @@ if (themeToggle) {
         });
     }
 
-    // Order all from cart → personal TG
-    if (cartOrder) {
-        cartOrder.addEventListener('click', () => {
-            if (!cart.length) return;
-            const lines = [
-                'Здравствуйте. Хочу оформить заказ.',
-                ''
-            ];
-            let total = 0;
-            cart.forEach((item, i) => {
-                total += item.price * item.qty;
-                lines.push(`${i + 1}. ${item.title}`);
-                lines.push(`   Цвет: ${item.color} · Размер: ${item.size} · ${item.qty} шт`);
-                lines.push(`   ${(item.price * item.qty).toLocaleString('ru-RU')} ₽`);
-                lines.push('');
-            });
-            lines.push(`Итого: ${total.toLocaleString('ru-RU')} ₽`);
-            lines.push('');
-            lines.push('ФИО:');
-            lines.push('Телефон:');
-            lines.push('Город:');
-            lines.push('Адрес:');
-            lines.push('Почтовый индекс:');
-            lines.push('ПВЗ (если нужен):');
-            lines.push('');
-            lines.push('Готов подтвердить заказ.');
-            const message = lines.join('%0A');
-            window.open(`https://t.me/${TG_USERNAME}?text=${message}`, '_blank');
-        });
-    }
-
+    function openCheckout(items){if(!items||!items.length||items.some(item=>!item.size||!item.color))return;const overlay=document.getElementById('checkout-overlay'),form=document.getElementById('checkout-form');if(!overlay||!form)return;form.dataset.items=JSON.stringify(items);overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>document.getElementById('checkout-name')?.focus(),120)}
+    function closeCheckout(){const overlay=document.getElementById('checkout-overlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+    document.getElementById('checkout-close')?.addEventListener('click',closeCheckout);
+    document.getElementById('checkout-overlay')?.addEventListener('click',e=>{if(e.target.id==='checkout-overlay')closeCheckout()});
+    document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout()});
+    document.getElementById('checkout-form')?.addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('checkout-name')?.value.trim(),phone=document.getElementById('checkout-phone')?.value.trim(),address=document.getElementById('checkout-address')?.value.trim(),postcode=document.getElementById('checkout-postcode')?.value.trim(),error=document.getElementById('checkout-error');if(!name||!phone||!address||!postcode){if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}return}let items=[];try{items=JSON.parse(document.getElementById('checkout-form').dataset.items||'[]')}catch(_){}if(!items.length)return;let total=0;const lines=['Здравствуйте! Хочу оформить заказ.',''];items.forEach((item,i)=>{total+=Number(item.price)*Number(item.qty);lines.push((i+1)+'. '+item.title,'   Цвет: '+item.color+' · Размер: '+item.size+' · '+item.qty+' шт','   '+Number(item.price*item.qty).toLocaleString('ru-RU')+' ₽','')});lines.push('Итого: '+total.toLocaleString('ru-RU')+' ₽','','Данные для доставки:','ФИО: '+name,'Контактный номер: '+phone,'Адрес: '+address,'Почтовый индекс: '+postcode,'','Готов подтвердить заказ.');window.open('https://t.me/nthngv?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener,noreferrer');closeCheckout()});
+    if(cartOrder)cartOrder.addEventListener('click',()=>{if(!cart.length||cart.some(item=>!item.size||!item.color))return;openCheckout(cart)});
     // Expose for debugging
     window.__baseCart = () => cart;
 })();
