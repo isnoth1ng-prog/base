@@ -65,6 +65,7 @@ function chips(box,values,setter,autoSelectFirst=false){
       box.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
       setter(v);
+      window.BASEIsland?.refresh?.();
       islandStatus('SIZE '+v,900);
       vibrate();
     });
@@ -149,4 +150,5 @@ document.addEventListener('DOMContentLoaded',()=>{
     vibrate();
   });
   syncBuyState();
+  window.BASEIsland?.refresh?.();
 });
