@@ -24,7 +24,7 @@ function telegramUrl(message){
   return 'https://t.me/'+TG+'?text='+encodeURIComponent(message);
 }
 
-function cartMessage(items=cart){
+function cartMessage(items=cart,name='',phone='',address='',postcode=''){
   const lines=['Здравствуйте! Хочу оформить заказ.',''];
   let total=0;
   items.forEach((x,i)=>{
@@ -34,7 +34,7 @@ function cartMessage(items=cart){
     lines.push('   '+money(x.price*x.qty));
     lines.push('');
   });
-  lines.push('Итого: '+money(total),'','ФИО:','Телефон:','Город:','Адрес:','Почтовый индекс:','ПВЗ (если нужен):','','Готов подтвердить заказ.');
+  lines.push('Итого: '+money(total),'','Данные для доставки:','ФИО: '+name,'Контактный номер: '+phone,'Адрес: '+address,'Почтовый индекс: '+postcode,'','Готов подтвердить заказ.');
   return lines.join('\n');
 }
 
@@ -79,7 +79,7 @@ function add(){
 function buyNow(){
   if(!product||!color||!size)return;
   const item={id:product.id,title:product.title,color,size,price:product.price,image:product.image,qty:1};
-  window.open(telegramUrl(cartMessage([item])),'_blank','noopener,noreferrer');
+  openCheckout([item]);
 }
 
 function chips(box,values,setter,autoSelectFirst=false){
@@ -135,12 +135,11 @@ document.addEventListener('DOMContentLoaded',()=>{
     save();renderCart();window.dispatchEvent(new Event('base:cart-changed'));vibrate();
   });
 
-  $('cart-order').addEventListener('click',e=>{
-    if(!cart.length || cart.some(x=>!x.size)){e.preventDefault();return}
-    e.preventDefault();
-    window.open(telegramUrl(cartMessage()),'_blank','noopener,noreferrer');
-  });
-
+  $('cart-order').addEventListener('click',e=>{e.preventDefault();if(!cart.length||cart.some(x=>!x.size||!x.color))return;openCheckout(cart)});
+  function openCheckout(items){const overlay=$('checkout-overlay'),form=$('checkout-form');if(!overlay||!form)return;form.dataset.items=JSON.stringify(items);overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('checkout-name')?.focus(),120)}
+  function closeCheckout(){const overlay=$('checkout-overlay');if(!overlay)return;overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow=''}
+  $('checkout-close')?.addEventListener('click',closeCheckout);$('checkout-overlay')?.addEventListener('click',e=>{if(e.target.id==='checkout-overlay')closeCheckout()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout()});
+  $('checkout-form')?.addEventListener('submit',e=>{e.preventDefault();const name=$('checkout-name')?.value.trim(),phone=$('checkout-phone')?.value.trim(),address=$('checkout-address')?.value.trim(),postcode=$('checkout-postcode')?.value.trim(),error=$('checkout-error');if(!name||!phone||!address||!postcode){if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}return}let items=[];try{items=JSON.parse($('checkout-form').dataset.items||'[]')}catch(_){}if(!items.length)return;window.open(telegramUrl(cartMessage(items,name,phone,address,postcode)),'_blank','noopener,noreferrer');closeCheckout()});
   const themeBtn=$('theme-toggle');
   if(themeBtn)themeBtn.addEventListener('click',()=>{
     const next=document.documentElement.dataset.theme==='light'?'dark':'light';
