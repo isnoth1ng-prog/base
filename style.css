@@ -1639,3 +1639,10 @@ button { border: none; background: none; font-family: inherit; cursor: pointer; 
 .base-island-actions svg{width:16px!important;height:16px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.55!important;stroke-linecap:round!important;stroke-linejoin:round!important}
 .base-island-actions a,.base-island-actions button{min-height:31px!important;border-radius:10px!important}
 @media(max-width:600px){.base-island-actions{grid-template-columns:repeat(3,1fr)!important;gap:5px!important}.base-island-actions a,.base-island-actions button{min-height:30px!important}}
+
+
+/* ===== FINAL ISLAND 3-ICON WIDTH ===== */
+.base-island-ui.is-expanded{width:min(190px,calc(100vw - 32px))!important}
+.base-island-ui.is-expanded .base-island-actions{grid-template-columns:repeat(3,1fr)!important;gap:4px!important}
+.base-island-ui.is-expanded .base-island-expanded{padding-left:6px!important;padding-right:6px!important;padding-bottom:5px!important}
+@media(max-width:600px){.base-island-ui.is-expanded{width:min(184px,calc(100vw - 28px))!important}.base-island-ui.is-expanded .base-island-expanded{padding-left:5px!important;padding-right:5px!important}}
