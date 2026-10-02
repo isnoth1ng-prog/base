@@ -224,8 +224,12 @@ if (themeToggle) {
             cartOrder.classList.remove('disabled');
             cartOrder.setAttribute('aria-disabled', 'false');
         }
-        const invalidCart = cart.some(item => !item.size || !item.color);
-        if (cartOrder) cartOrder.classList.toggle('disabled', invalidCart);
+        // A cart containing a product is always actionable. The checkout form
+        // will handle any missing item data instead of silently disabling the button.
+        if (cartOrder) {
+            cartOrder.classList.remove('disabled');
+            cartOrder.setAttribute('aria-disabled', 'false');
+        }
         cartItems.innerHTML = cart.map((item, idx) => `
             <div class="cart-row" data-idx="${idx}">
                 <img src="${item.image}" alt="">
@@ -323,7 +327,14 @@ if (themeToggle) {
     document.getElementById('checkout-overlay')?.addEventListener('click',e=>{if(e.target.id==='checkout-overlay')closeCheckout()});
     document.addEventListener('keydown',e=>{if(e.key==='Escape')closeCheckout()});
     document.getElementById('checkout-form')?.addEventListener('submit',e=>{e.preventDefault();const name=document.getElementById('checkout-name')?.value.trim(),phone=document.getElementById('checkout-phone')?.value.trim(),address=document.getElementById('checkout-address')?.value.trim(),postcode=document.getElementById('checkout-postcode')?.value.trim(),error=document.getElementById('checkout-error');if(!name||!phone||!address||!postcode){if(error){error.textContent='Заполни все поля, чтобы продолжить.';error.hidden=false}return}let items=[];try{items=JSON.parse(document.getElementById('checkout-form').dataset.items||'[]')}catch(_){}if(!items.length)return;let total=0;const lines=['Здравствуйте! Хочу оформить заказ.',''];items.forEach((item,i)=>{total+=Number(item.price)*Number(item.qty);lines.push((i+1)+'. '+item.title,'   Цвет: '+item.color+' · Размер: '+item.size+' · '+item.qty+' шт','   '+Number(item.price*item.qty).toLocaleString('ru-RU')+' ₽','')});lines.push('Итого: '+total.toLocaleString('ru-RU')+' ₽','','Данные для доставки:','ФИО: '+name,'Контактный номер: '+phone,'Адрес: '+address,'Почтовый индекс: '+postcode,'','Готов подтвердить заказ.');const url='https://t.me/nthngv?text='+encodeURIComponent(lines.join('\\n'));const tg=window.open(url,'_blank','noopener,noreferrer');if(!tg)location.href=url;closeCheckout()});
-    if(cartOrder)cartOrder.addEventListener('click',()=>{if(!cart.length||cart.some(item=>!item.size||!item.color))return;openCheckout(cart)});
+    if (cartOrder) {
+        cartOrder.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!cart.length) return;
+            openCheckout(cart);
+        });
+    }
     // Expose for debugging
     window.__baseCart = () => cart;
 })();
