@@ -125,9 +125,14 @@ document.addEventListener('DOMContentLoaded',()=>{
       'Готов подтвердить заказ.'
     ];
     const url=telegramUrl(lines.join('\n'));
-    const tg=window.open(url,'_blank','noopener,noreferrer');
-    if(!tg)location.href=url;
-    closeCheckout();
+    const submit=$('checkout-form')?.querySelector('.checkout-submit');
+    if(submit){submit.disabled=true;submit.textContent='Открываем Telegram…';submit.style.opacity='.72'}
+    setTimeout(()=>{
+      const tg=window.open(url,'_blank','noopener,noreferrer');
+      if(!tg)location.href=url;
+      closeCheckout();
+      if(submit){submit.disabled=false;submit.textContent='Продолжить в Telegram';submit.style.opacity=''}
+    },280);
   });
 
   const themeBtn=$('theme-toggle');
